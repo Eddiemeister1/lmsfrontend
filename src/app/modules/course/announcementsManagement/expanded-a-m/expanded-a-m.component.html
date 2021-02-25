@@ -1,0 +1,56 @@
+<div class="center-table-row">
+    <app-sidebar></app-sidebar>
+    <div class="inbox-right-container">
+        <div class="header">
+            <h2 class="title t-class">Announcements</h2>
+            <a (click)="goBack()" class='float-left create nav-link btn-extra'> <i class="fas fa-chevron-circle-left"></i> Back</a>
+            <div *ngIf="a.type === 'M'">
+                <a (click)="openReply()" class='float-right  create nav-link btn-extra'> <i class="fas fa-share-square"></i> Reply</a>
+            </div>
+        </div>
+        <div class="inbox-list">
+            <div class="expanded-top">
+                <div *ngIf="a.type === 'M'; else isAnnouncement">
+                    <span class="author" [innerHTML]="a.sender_name"></span>
+                    <span class="date">{{a.created | date:'EEEE, MMM dd, y - h:mm a':'GMT-0400'}}</span>
+                </div>
+                <ng-template #isAnnouncement>
+                    <span class="author" [innerHTML]="a.user"></span>
+                    <span class="date">
+                        <span class="date-text">Created:</span>
+                         {{a.created | date:'EEEE, MMM dd, y - h:mm a':'GMT-0400'}}
+                    </span>
+                    <div class="clear-float" *ngIf="a.created !== a.changed">
+                        <span class="date">
+                            <span class="date-text">Last Updated:</span>
+                             {{a.changed | date:'EEEE, MMM dd, y - h:mm a':'GMT-0400'}}
+                        </span>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="expanded-bottom clear-float">
+                <span [innerHTML]="a.content"></span>
+            </div>
+        </div>
+        <div *ngFor="let reply of replies | async" class="inbox-list">
+            <div class="expanded-top">
+                <span class="author" [innerHTML]="reply.sender_name"></span>
+                <span class="date" [innerHTML]="reply.created | date:'EEEE, MMM dd, y - h:mm a':'GMT-0400'"></span>
+            </div>
+            <div class="expanded-bottom clear-float">
+                <span class="" [innerHTML]="reply.content"></span>
+            </div>
+        </div>
+        
+        <div class="all-content-container" id="replyTextbox" [style.display]="isReplying ? 'block' : 'none'">
+            <div class="content-container float-left">
+                <textarea class="content" id="content" maxlength="500" placeholder="Type reply..."></textarea>
+            </div>
+            <div class="send-button-container">
+                <button class="btn btn-primary btn-extra" (click)="createReply()">Send</button>
+            </div>
+        </div>
+        <span id="content-anchor"></span>
+    </div>
+</div>
+

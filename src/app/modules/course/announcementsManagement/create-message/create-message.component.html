@@ -1,0 +1,47 @@
+<div class="center-table-row">
+    <app-sidebar></app-sidebar>
+    <div class='cm-right-container'>
+        <div class='header'>
+            <h2 class=" mt-4 t-class">Create Message</h2>
+        </div>
+        <div class="message">
+            <div class='From padding-b'>
+                <span>From: {{currentUser.f_name + ' ' + currentUser.l_name}}</span>
+            </div>
+            <div class='To padding-b'>
+                <span>To: </span>
+                <select id="studentInfo">
+                    <ng-container *ngIf="admins | async">
+                        <option disabled>--- Admins ---</option>
+                        <ng-container *ngFor="let admin of admins | async">
+                            <ng-container *ngIf="admin.student_id !== currentUser.id">
+                                <option [value]="admin.student_id" [innerHTML]="admin.f_name.concat(' ' + admin.l_name)"></option>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="instructors | async">
+                        <option disabled>--- Instructors ---</option>
+                        <ng-container *ngFor="let instructor of instructors | async">
+                            <ng-container *ngIf="instructor.student_id !== currentUser.id">
+                                <option [value]="instructor.student_id" [innerHTML]="instructor.f_name.concat(' ' + instructor.l_name)"></option>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="students | async">
+                        <option disabled>--- Students --- </option>
+                        <ng-container *ngFor="let student of students | async">
+                            <ng-container *ngIf="student.student_id !== currentUser.id">
+                                <option [value]="student.student_id" [innerHTML]="student.f_name.concat(' ' + student.l_name)"></option>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    
+                </select>
+            </div>
+            <div class="padding-b">
+                <textarea class="content" id="content"  maxlength="500" placeholder="Type message..."></textarea>
+            </div>
+            <button class="btn btn-primary btn-extra" (click)="createMessage()">Send</button>
+        </div>
+    </div>
+</div>

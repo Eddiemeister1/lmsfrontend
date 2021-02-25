@@ -1,0 +1,46 @@
+<div class="center-form">
+    <h2 class="t-class mt-4 mb-4">Create New Module</h2>
+    <form [formGroup]="moduleForm" class="col-sm-4">
+    
+        <div class="form-group">
+            <label for="number">Number</label>
+            <input type="text" class="form-control"  formControlName="number" #number [ngClass]="{ 'is-invalid': submitted && m.number.errors }" required>
+            <div *ngIf="submitted && m.number.errors" class="invalid-feedback">
+                <div *ngIf="m.number.errors.required">Number is required</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="title">Title</label>
+            <textarea class="form-control"  formControlName="title" #title [ngClass]="{ 'is-invalid': submitted && m.title.errors }" required></textarea>
+            <div *ngIf="submitted && m.title.errors" class="invalid-feedback">
+                <div *ngIf="m.title.errors.required">Title is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="extraCreditPoints">Extra Credit Points</label>
+            <input type="text" class="form-control"  formControlName="extraCreditPoints" #extraCreditPoints [ngClass]="{ 'is-invalid': submitted && m.extraCreditPoints.errors }" required>
+            <div *ngIf="submitted && m.extraCreditPoints.errors" class="invalid-feedback">
+                <div *ngIf="m.extraCreditPoints.errors.required">Extra Credit Points is required</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="lockedUntil">Locked Until</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" ngbDatepicker (dateSelect)="onDateSelect($event)" #d="ngbDatepicker" formControlName="lockedUntil" #lockedUntil readonly [value]="todayDate | async">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary  far fa-calendar-alt" (click)="d.toggle()" type="button"></button>
+                </div>
+                <!--<div *ngIf="submitted && m.lockedUntil.errors" class="invalid-feedback">
+                    <div *ngIf="m.lockedUntil.errors.required">Locked Until is required</div>
+                </div>-->
+            </div>
+        </div>
+    
+        <button type="submit" (click)="addModule(number.value, title.value, extraCreditPoints.value, lockedUntil.value)" routerLink="/courses/{{courseId}}/modules" class="btn btn-primary btn-extra"><i class="fas fa-plus-circle"></i> Create Module</button>
+        <!--<a routerLink="/admin" class="btn btn-warning"><i class="fas fa-arrow-circle-left"></i> Go Back</a>-->
+    </form>
+</div>

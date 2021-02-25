@@ -1,0 +1,320 @@
+/****========== Custom Styles ===========*****/
+
+/**** Responsive BreakPoints ********/
+@mixin mobile {
+@media (max-width: 568px) { @content; }
+}@mixin tablet {
+@media (min-width: 768px) { @content; }
+}@mixin tablet-large {
+@media (min-width: 900px) { @content; }
+}@mixin desktop {
+@media (min-width: 1024px) { @content; }
+}@mixin desktop-large {
+@media (min-width: 1200px) { @content; }
+}@mixin desktop-xlarge {
+@media (min-width: 1440px) { @content; }
+}@mixin desktop-xxlarge {
+@media (min-width: 1600px) { @content; }
+}@mixin desktop-xxxlarge {
+@media (min-width: 1800px) { @content; }
+} 
+
+/**** App Colors ****/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+
+/****========== End Custom Styles ===========*****/
+
+
+.main {
+    background-color: yellowgreen;
+}
+.nav{
+    display: contents;
+}
+
+th{
+    width: 20%;
+}
+th:last-child{
+    width: 10%;    
+}
+
+th:first-child{
+    width: 4%;
+}
+
+.table-extra {
+    width: 95%;
+}
+
+.btn-warning{
+    width: 200px;
+}
+
+.sidenav-extra {
+    position: absolute;
+  }
+
+.dontShowThis {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+}
+
+.table-header {
+    background-color: $colorY;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.table td, .table th {
+    font-size: 14px;
+}
+
+.btn-extra {
+    width: 80%;
+    padding: 1px 4px;
+    margin: 3px;
+    font-size: 12px;
+    background-color: $colorB;
+    color: white;
+    border: 1px solid $colorB;
+    @include tablet(){
+        width: 90px;
+        margin: 3px 0;
+    }
+    
+}
+.btn-extra:hover {
+    background-color: $colorB;
+    color: $colorY;
+    border: 1px solid $colorB;
+}
+
+.btn-extra:not(:disabled):not(.disabled):active {
+    background-color: $colorB;
+    color: $colorY;
+    border: 1px solid $colorB;
+}
+
+.btn-extra.focus, .btn-extra:focus {
+    box-shadow: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+
+.btn-success {
+    color: #000;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-success:hover {
+    color: $colorY;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show>.btn-success.dropdown-toggle {
+    color: $colorY;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-success:not(:disabled):not(.disabled).active:focus, .btn-success:not(:disabled):not(.disabled):active:focus, .show>.btn-success.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.btn-extra:not(:disabled):not(.disabled):active {
+    background-color: transparent;
+    color: $colorY;
+    border: 1px solid transparent;
+}
+
+.btn-extra.focus, .btn-extra:focus {
+    box-shadow: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+
+
+.display-btn {
+    display:block;
+    margin-bottom: 30px;
+    @include tablet(){
+        margin-bottom: 0;
+        display: grid;
+    }
+}
+
+.no-tablet {
+    display: none;
+    @include tablet(){
+        display: table;
+    }
+}
+
+.tablet-mobile {
+    display: block;
+    @include tablet(){
+        display: none;
+    }
+}
+
+.trstyle:hover {
+    background-color:#c3973f14;
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+}
+
+.course-style{
+    margin-top: 100px;
+    @include tablet(){
+        margin-top: 1.5rem;
+    }
+}
+
+.sidenav-extra {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    @include tablet(){
+        left: 0;
+        transform: none;
+        -webkit-transform: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+    }
+}
+
+.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: .5;
+    color: $colorB;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+/***********************
+** Table
+***********************/
+.table-style{
+    border: none;
+    margin: 0 10px 0 0;
+    @include tablet(){
+        border: 1.5px solid #dee2e6;
+        margin: 0 2% 1.2%;
+    }
+}
+
+.table thead th {
+    font-size: 14px;
+    vertical-align: bottom;
+    border-bottom: 1px solid #dee2e6;
+    letter-spacing: 0.5px;
+
+}
+.table td, .table th {
+    font-size: 14px;
+}
+.td-enrollment {
+    padding: 0;
+    border: 0;
+}
+
+.table-line{
+    border-top: none;
+    text-align: end;
+    @include tablet(){
+        border-top: 1px solid #dee2e6;
+    }
+}
+.table-line-top-none{
+    border-top: none;
+   /* @include tablet(){
+        border-top: 1px solid #dee2e6;
+    }*/
+}
+
+.table td, .table th {
+    padding: .2rem;
+}
+
+.table-course {
+    display: block;
+    padding: 20px 10px;
+}
+
+.tr-border {
+    border: 1px solid #dee2e6;
+}
+
+.right-and-padding {
+    text-align: end;
+}
+
+.ngfor-table {
+    margin: 0 10px;
+    margin-bottom: 30px;
+}
+
+.tablet-mobile-header {
+    background-color:$colorY;
+    color: $colorB;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+.tb-border {
+    border-bottom: 1px solid #dee2e6;
+    padding: 0 5px;
+}
+
+.btn-actions-style {
+    position: relative;
+    text-align: center;
+}
+
+.mobile-style {
+    width: 100%;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.padding-10 {
+    padding: 0 10px!important;
+}
+
+.someting {
+    border: none;
+    background-color: white;
+}
+
+.w120px {
+    width: 120px;
+}
+
+.w60px {
+    width: 60px;
+}
+

@@ -1,0 +1,367 @@
+<div class="center-form">
+    <h2 class="mt-4 t-class">Courses</h2>
+
+        <div class="row">
+        <div class="col-lg-12 mb-4">
+            <h2 class="h2-search-course">Search for course</h2>
+            <input #search type="search" name="search" class="search-30H" [value]="searchInputVal" (input)="searchInputVal = $event.target.value" id="search" placeholder="search course here...." (keyup)="searchCourse(search.value)" matInput [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let searchedCourse of searchedCourses" [value]="searchedCourse.name" (click)="searchedCourseFn(searchedCourse)">
+                    {{searchedCourse.name}}
+                </mat-option>
+            </mat-autocomplete>
+            <button type="button" class="btn btn-primary btn-showAll search-30H" (click)="showAll()"><i class="fa fa-search"></i></button>
+        </div>           
+        </div>
+</div>
+
+
+
+<!-----------------------  (Desktop) 768px and up   -------------------------------------------------------------------------------------------------------->
+<div [ngSwitch]="foundCoursesN" class="table-style no-tablet">
+    <div *ngSwitchCase="1">
+        <!--<p>searched course obj table</p>-->
+        <table class="table">
+            <thead class="text-uppercase table-header">
+                <tr>
+                    <th *ngFor="let colName of displayedColumns" scope="col">{{ colName }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="searchedCourseObject as course" class="trstyle ">
+                    <th scope="row">{{ course.id }}</th>
+                    <td style="max-width: 125px; word-wrap: break-word;">{{ course.name }}</td>
+                    <td style="max-width: 200px; word-wrap: break-word;">{{ course.description }}</td>
+                    <td>{{ course.seats }}</td>
+                    <td>{{ course.start_date }}</td>
+                    <td>{{ course.end_date }}</td>
+                    <div class="table-line" *ngIf="! currentUser; else elseSearchUserObj" >
+                        <td class="someting"></td>
+                    </div>
+                    <ng-template #elseSearchUserObj>
+                        <div class="table-line" *ngIf="enrollment_status_searched_course; else elseBlockSearchedObj">
+                            <div [ngSwitch]="enrollment_status_searched_course">
+                                <div *ngSwitchCase="'enrolled'">
+                                    <td class="table-line-top-none" *ngIf="currentUser"><button type="button" class="btn btn-info" style="cursor: not-allowed" disabled>{{enrollment_status_searched_course}}</button></td>
+                                </div>
+                                <div *ngSwitchCase="'pending'">
+                                    <td class="table-line-top-none" *ngIf="currentUser"><button type="button" class="btn btn-warning" style="cursor: not-allowed" disabled>{{enrollment_status_searched_course}}</button></td>
+                                </div>
+                                <!--<div *ngSwitchDefault>
+                                    <td *ngIf="currentUser"><button type="button" class="btn btn-success" disabled>EnrollDefault</button></td>
+                                </div>-->
+                            </div>
+                        </div>
+                        <ng-template #elseBlockSearchedObj>
+                            <td *ngIf="currentUser && !coursesUnavailableSearched; else elseBlockObj"><button type="button" (click)="studentEnroll(studentId, course.id, course.name, 'pending')" class="btn btn-success">Enroll</button></td>
+                            <ng-template #elseBlockObj>
+                                <td class="table-line-top-none" *ngIf="currentUser"><button class="btn btn-danger" style="cursor: not-allowed" disabled>Full</button></td>
+                            </ng-template> 
+                        </ng-template>
+                    </ng-template>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngSwitchCase="2">
+        <!--<p>searched courses arr table</p>-->
+        <table class="table">
+            <thead class="text-uppercase table-header">
+                <tr>
+                    <th *ngFor="let colName of displayedColumns" scope="col">{{ colName }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let course of searchedCoursesArray; let i = index" class="trstyle">
+                    <th scope="row">{{ course.id }}</th>
+                    <td style="max-width: 125px; word-wrap: break-word;">{{ course.name }}</td>
+                    <td style="max-width: 200px; word-wrap: break-word;">{{ course.description }}</td>
+                    <td>{{ course.seats }}</td>
+                    <td>{{ course.start_date }}</td>
+                    <td>{{ course.end_date }}</td>
+                    <div class="table-line" *ngIf="! currentUser; else elseSearchUser" >
+                        <td class="someting"></td>
+                    </div>
+                    <ng-template #elseSearchUser>
+                        <div class="table-line" *ngIf="enrollment_status[i]; else elseBlockSearchedArr">
+                            <div [ngSwitch]="enrollment_status[i]">
+                                <div *ngSwitchCase="'enrolled'">
+                                    <td class="table-line-top-none" *ngIf="currentUser"><button type="button" class="btn btn-info" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                </div>
+                                <div *ngSwitchCase="'pending'">
+                                    <td class="table-line-top-none" *ngIf="currentUser"><button type="button" class="btn btn-warning" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                </div>
+                                <!--<div *ngSwitchDefault>
+                                    <td *ngIf="currentUser"><button type="button" class="btn btn-success" disabled>EnrollDefault</button></td>
+                                </div>-->
+                            </div>
+                        </div>
+                        <ng-template #elseBlockSearchedArr>
+                            <td *ngIf="currentUser && !coursesUnavailable[i]; else elseBlockArr"><button type="submit" (click)="studentEnroll(currentUser.id, course.id, course.name, 'pending')" class="btn btn-success">Enroll</button></td>
+                            <ng-template #elseBlockArr>
+                                <td class="table-line-top-none" *ngIf="currentUser"><button class="btn btn-danger" style="cursor: not-allowed" disabled>Full</button></td>
+                            </ng-template> 
+                        </ng-template>
+                    </ng-template>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngSwitchDefault>
+        <!--<p>default table (fetchPageCourses())</p>-->
+        <table class="table">
+            <thead class="text-uppercase table-header">
+                <tr>
+                    <th *ngFor="let colName of displayedColumns" scope="col">{{ colName }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let course of courses.res; let i = index" class="trstyle">
+                    <th scope="row">{{ course.id }}</th>
+                    <td style="max-width: 125px; word-wrap: break-word;">{{ course.name }}</td>
+                    <td style="max-width: 200px; word-wrap: break-word;">{{ course.description }}</td>
+                    <td>{{ course.seats }}</td>
+                    <td>{{ course.start_date }}</td>
+                    <td>{{ course.end_date }}</td>
+                    <div class="table-line" *ngIf="! currentUser; else elseUser" >
+                        <td class="someting"></td>
+                    </div>
+                    <ng-template #elseUser>
+                        <div class="table-line" *ngIf="enrollment_status[i]; else elseBlockCoursesArr" >
+                            <div [ngSwitch]="enrollment_status[i]">
+                                <div *ngSwitchCase="'enrolled'">
+                                    <td class="table-line-top-none" *ngIf="currentUser"><button type="button" class="btn btn-info" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                </div>
+                                <div *ngSwitchCase="'pending'">
+                                    <td class="table-line-top-none" *ngIf="currentUser"><button type="button" class="btn btn-warning" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                </div>
+                                <!--<div *ngSwitchDefault>
+                                    <td *ngIf="currentUser"><button type="button" class="btn btn-success" disabled>EnrollDefault</button></td>
+                                </div>-->
+                            </div>
+                        </div>
+                        <ng-template #elseBlockCoursesArr>
+                            <td *ngIf="currentUser && !coursesUnavailable[i]; else elseBlockFull"><button type="submit" (click)="studentEnroll(currentUser.id, course.id, course.name, 'pending')" class="btn btn-success">Enroll</button></td>
+                            <ng-template #elseBlockFull>
+                                <td class="table-line-top-none" *ngIf="currentUser"><button class="btn btn-danger" style="cursor: not-allowed" disabled>Full</button></td>
+                            </ng-template>    
+                        </ng-template>
+                    </ng-template>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-----------------  (desktop) for 768px  up ---------------------------------------------------------------------------->
+
+
+
+
+<!-----------------  (tablet-mobile) for 767px  down -------------------------------------------------------------------->
+<div [ngSwitch]="foundCoursesN" class="table-style tablet-mobile">
+    <div *ngSwitchCase="1">
+        <!------     searched course   ------->
+         <table class="table">
+            <tbody>
+                <thead *ngIf="searchedCourseObject as course" class="trstyle table-course">
+                    <div class="course-name">
+                        {{ course.name }}
+                    </div>
+                     <!--<tr class="tr-border">
+                        <th class="table-header">Course</th>
+                        <td class="table-header center-text">{{ course.name }}</td>
+                    </tr>-->
+                    <tr class="tr-border">
+                        <th class="w25 align-baseline">Description</th>
+                        <td class="w600px right-and-padding pl-3">{{ course.description }}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">Seats</th>
+                        <td class="w600px right-and-padding">{{ course.seats}}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">Start</th>
+                        <td class="w600px right-and-padding">{{ course.start_date }}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">End</th>
+                        <td class="w600px right-and-padding">{{ course.end_date }}</td>
+                    </tr>
+                    <div *ngIf="! currentUser; else elseUserSearchmobileObj" >
+                        <!--<p> Do nothing! </p>-->
+                    </div>
+                    <ng-template #elseUserSearchmobileObj>
+                        <tr class="tr-border">
+                            <th class="w25">Enrollment</th>
+                            <div class="table-line" *ngIf="enrollment_status_searched_course; else elseBlockSearchedObj" >
+                                <div [ngSwitch]="enrollment_status_searched_course">
+                                    <div *ngSwitchCase="'enrolled'">
+                                        <td class="table-line-top-none w600px" *ngIf="currentUser"><button type="button" class="btn btn-info" style="cursor: not-allowed" disabled>{{enrollment_status_searched_course}}</button></td>
+                                    </div>
+                                    <div *ngSwitchCase="'pending'">
+                                        <td class="table-line-top-none w600px" *ngIf="currentUser"><button type="button" class="btn btn-warning" style="cursor: not-allowed" disabled>{{enrollment_status_searched_course}}</button></td>
+                                    </div>
+                                    <!--<div *ngSwitchDefault>
+                                        <td *ngIf="currentUser"><button type="button" class="btn btn-success" disabled>EnrollDefault</button></td>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <ng-template #elseBlockSearchedObj>
+                                <td class="w600px table-line" *ngIf="currentUser && !coursesUnavailableSearched; else elseBlockObj"><button type="submit" (click)="studentEnroll(currentUser.id, course.id, course.name, 'pending')" class="btn btn-success padding-10">Enroll</button></td>
+                                <ng-template #elseBlockObj>
+                                    <td class="table-line-top-none table-line w600px" *ngIf="currentUser"><button class="btn btn-danger" style="cursor: not-allowed" disabled>Full</button></td>
+                                </ng-template>    
+                            </ng-template>
+                        </tr>
+                    </ng-template>
+                </thead>
+            </tbody>
+        </table>
+    </div>
+    <div *ngSwitchCase="2">
+        <!--<p>searched courses arr table</p>-->
+        <table class="table">
+            <tbody>
+                <thead *ngFor="let course of searchedCoursesArray; let i = index" class="trstyle table-course">
+                    <div class="course-name">
+                        {{ course.name }}
+                    </div>
+                    <tr class="tr-border">
+                        <th class="w25 align-baseline">Description</th>
+                        <td class="w600px right-and-padding pl-3">{{ course.description }}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">Seats</th>
+                        <td class="w600px right-and-padding">{{ course.seats}}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">Start</th>
+                        <td class="w600px right-and-padding">{{ course.start_date }}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">End</th>
+                        <td class="w600px right-and-padding">{{ course.end_date }}</td>
+                    </tr>
+                    <div *ngIf="! currentUser; else elseUserSearchmobile" >
+                        <!--<p> Do nothing! </p>-->
+                    </div>
+                    <ng-template #elseUserSearchmobile>
+                        <tr class="tr-border">
+                            <th class="w25">Enrollment</th>
+                            <div class="table-line" *ngIf="enrollment_status[i]; else elseBlockSearchedArr" >
+                                <div [ngSwitch]="enrollment_status[i]">
+                                    <div *ngSwitchCase="'enrolled'">
+                                        <td class="table-line-top-none w600px" *ngIf="currentUser"><button type="button" class="btn btn-info" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                    </div>
+                                    <div *ngSwitchCase="'pending'">
+                                        <td class="table-line-top-none w600px" *ngIf="currentUser"><button type="button" class="btn btn-warning" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                    </div>
+                                    <!--<div *ngSwitchDefault>
+                                        <td *ngIf="currentUser"><button type="button" class="btn btn-success" disabled>EnrollDefault</button></td>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <ng-template #elseBlockSearchedArr>
+                                <td class="w600px table-line" *ngIf="currentUser && !coursesUnavailable[i]; else elseBlockArr"><button type="submit" (click)="studentEnroll(currentUser.id, course.id, course.name, 'pending')" class="btn btn-success padding-10">Enroll</button></td>
+                                <ng-template #elseBlockArr>
+                                    <td class="table-line-top-none table-line w600px" *ngIf="currentUser"><button class="btn btn-danger" style="cursor: not-allowed" disabled>Full</button></td>
+                                </ng-template>    
+                            </ng-template>
+                        </tr>
+                    </ng-template>
+                </thead>
+            </tbody>
+        </table>
+    </div>
+    <div *ngSwitchDefault>
+        <!--------    default table (fetchPageCourses()) -------->
+        <table class="table">
+            <tbody>
+                <thead *ngFor="let course of courses.res; let i = index" class="trstyle table-course">
+                    <div class="course-name">
+                        {{ course.name }}
+                    </div>
+                     <!--<tr class="tr-border">
+                        <th class="table-header">Course</th>
+                        <td class="table-header center-text">{{ course.name }}</td>
+                    </tr>-->
+                    <tr class="tr-border">
+                        <th class="w25 align-baseline">Description</th>
+                        <td class="w600px right-and-padding pl-3">{{ course.description }}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">Seats</th>
+                        <td class="w600px right-and-padding">{{ course.seats}}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">Start</th>
+                        <td class="w600px right-and-padding">{{ course.start_date }}</td>
+                    </tr>
+                    <tr class="tr-border">
+                        <th class="w25">End</th>
+                        <td class="w600px right-and-padding">{{ course.end_date }}</td>
+                    </tr>
+                    <div *ngIf="! currentUser; else elseUsermobile" >
+                        <!--<p> Do nothing! </p>-->
+                    </div>
+                    <ng-template #elseUsermobile>
+                        <tr class="tr-border">
+                            <th class="w25">Enrollment</th>
+                            <div class="table-line" *ngIf="enrollment_status[i]; else elseBlockCoursesArr" >
+                                <div [ngSwitch]="enrollment_status[i]">
+                                    <div *ngSwitchCase="'enrolled'">
+                                        <td class="table-line-top-none w600px" *ngIf="currentUser"><button type="button" class="btn btn-info" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                    </div>
+                                    <div *ngSwitchCase="'pending'">
+                                        <td class="table-line-top-none w600px" *ngIf="currentUser"><button type="button" class="btn btn-warning" style="cursor: not-allowed" disabled>{{enrollment_status[i]}}</button></td>
+                                    </div>
+                                    <!--<div *ngSwitchDefault>
+                                        <td *ngIf="currentUser"><button type="button" class="btn btn-success" disabled>EnrollDefault</button></td>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <ng-template #elseBlockCoursesArr>
+                                <td class="w600px table-line" *ngIf="currentUser && !coursesUnavailable[i]; else elseBlockFull"><button type="submit" (click)="studentEnroll(currentUser.id, course.id, course.name, 'pending')" class="btn btn-success padding-10">Enroll</button></td>
+                                <ng-template #elseBlockFull>
+                                    <td class="table-line-top-none table-line w600px" *ngIf="currentUser"><button class="btn btn-danger" style="cursor: not-allowed" disabled>Full</button></td>
+                                </ng-template>    
+                            </ng-template>
+                        </tr>
+                    </ng-template>
+                </thead>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--------------------------------------------------- end 767px down ----------------------------------------------------------------------------->
+
+
+
+
+<!----------------------------------------------------- Pagination ------------------------------------------------------------------------------->
+<div class="center-form" [ngClass]="{'disablePagination': disablePaginationBool}">
+    <nav aria-label="Page navigation course-library">
+        <ul class="pagination pagination-sm">
+
+            <ng-container *ngIf="page == 0; else elseBlock">
+                <li class="page-item disabled"><button class="page-link" (click)="fetchPageCourses(page-1)">Previous</button></li>
+            </ng-container>
+            <ng-template #elseBlock>
+                <li class="page-item"><button class="page-link" (click)="fetchPageCourses(page-1)">Previous</button></li>
+            </ng-template>
+
+            <ng-container *ngFor="let maxPages of maxPagesArray; let i = index">
+            <li class="page-item"><button class="page-link" (click)="fetchPageCourses(i)">{{i+1}}</button></li>  <!--changed {{i}} to {{i+1}} to display page #correctly-->
+            </ng-container>
+
+            <ng-container *ngIf="page == maxPages - 1; else elseBlock2">
+                <li class="page-item disabled"><button class="page-link" (click)="fetchPageCourses(page+1)">Next</button></li>
+            </ng-container>
+            <ng-template #elseBlock2>
+                <li class="page-item"><button class="page-link" (click)="fetchPageCourses(page+1)">Next</button></li>
+            </ng-template>
+            
+        </ul>
+    </nav>
+</div>
+<!----------------------------------------------------- End Pagination ---------------------------------------------------------------------------->

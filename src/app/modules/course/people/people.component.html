@@ -1,0 +1,85 @@
+<div class="center-table-row">
+    <app-sidebar></app-sidebar>
+    <div class="center-table-column ">
+
+        <!-- HEADER -->
+        <h2 class="t-class mt-4 mb-4"> STUDENTS </h2>
+
+        <ul class="nav nav-tabs side_nav" role="tablist">
+            <li *ngFor="let studentTab of studentMenu; let first = first;" [ngClass]="{firstItem: first}" role="presentation" class="accounts_li" [class.active]="selectedTab===studentTab">
+                <a (click)="selectedTab = studentTab" aria-controls="one" role="tab" data-toggle="tab">{{studentTab}}</a>
+            </li>
+        </ul>
+        
+        <div class="tab-content">
+            <!-- All Students Tab-->
+            <div *ngIf="selectedTab === studentMenu[0]" role="tabpanel" class="tab-pane active" id="one">
+                <!-- COLUMN Header -->
+                <div class="flexbox-container table-header">
+                    <!-- ADD NAME to Header -->
+                    <div class="flexbox-cell left w10p">NAME</div>
+                </div>
+                <!-- ADD NAME to table -->
+                <ng-container *ngIf="currentUser">
+                    <div class="flexbox-row" *ngFor="let student of students; let index = index">
+                        <div class="flexbox-container" [ngClass]="{'currentUser': currentUser.id == student.student_id}">
+                            <div class="flexbox-cell left not-in-mobile">{{ student.f_name }} {{ student.l_name }}</div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div><!-- End All Students Tab-->
+
+            <!-- Group Tab-->
+            <div *ngIf="selectedTab === studentMenu[1]" role="tabpanel" class="tab-pane active" id="two">
+                
+
+                <ng-container *ngIf="currentUser">
+                    <!-- check if current user is Admin or instructor -->
+                    <div *ngIf="currentUser.role == 'admin' || currentUser.role == 'instructor' ;then is_Admin else is_Student">here is ignored</div>    
+                        <ng-template #is_Admin>
+                            <!-- ADMIN and  Instructor VIEW  -->
+                            <div class="flexbox-row mb-5" *ngFor='let in of counter(totalGroup) ;let iTMP = index'>
+                                <div class="flexbox-container table-header" id="group-List-Header">
+                                    <!-- ADD NAME to Header and Group Number -->
+                                    <div class="flexbox-cell left w10p groupName">Name</div>
+                                    <div class="flexbox-cell left w10p groupNumber">Group - {{iTMP+1}}</div>
+                                </div>
+                                <!-- ADD Students NAME to table -->
+                                <ng-container *ngIf="currentUser;">
+                                        <div class="flexbox-row" *ngFor="let student of showAllGroups[iTMP]; let i = index">
+                                            <div class="flexbox-container" [ngClass]="{'currentUser': currentUser.id == student.student_id}">
+                                                <div class="flexbox-cell left not-in-mobile">{{ student.f_name }} {{ student.l_name }}</div>
+                                            </div>
+                                        </div>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                        <!-- Student View! -->
+                        <ng-template #is_Student>
+                              <!-- COLUMN Header -->
+                                <div class="flexbox-container table-header" id="group-List-Header">
+                                    <!-- ADD NAME to Header and Group Number -->
+                                    <div class="flexbox-cell left w10p groupName">Name</div>
+                                    <div class="flexbox-cell left w10p groupNumber">Group - {{group_Number}}</div>
+                                </div>
+                                <!-- ADD Students NAME to table -->
+                                <ng-container *ngIf="currentUser">
+                                    <div class="flexbox-row" *ngFor="let student of finalArrayGroups; let index = index">
+                                        <div class="flexbox-container" [ngClass]="{'currentUser': currentUser.id == student.student_id}">
+                                            <div class="flexbox-cell left not-in-mobile">{{ student.f_name }} {{ student.l_name }}</div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                        </ng-template>
+                </ng-container>
+
+
+            </div><!-- End Group Tab-->
+        </div>
+
+
+       
+    </div>
+</div>
+
+

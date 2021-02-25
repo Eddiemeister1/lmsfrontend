@@ -1,0 +1,70 @@
+/****========== Custom Styles ===========*****/
+
+/**** Responsive BreakPoints ********/
+    @mixin mobile {
+    @media (max-width: 568px) { @content; }
+    }@mixin tablet {
+    @media (min-width: 768px) { @content; }
+    }@mixin tablet-large {
+    @media (min-width: 900px) { @content; }
+    }@mixin desktop {
+    @media (min-width: 1024px) { @content; }
+    }@mixin desktop-large {
+    @media (min-width: 1200px) { @content; }
+    }@mixin desktop-xlarge {
+    @media (min-width: 1440px) { @content; }
+    }@mixin desktop-xxlarge {
+    @media (min-width: 1600px) { @content; }
+    }@mixin desktop-xxxlarge {
+    @media (min-width: 1800px) { @content; }
+    } 
+    
+    /**** App Colors ****/
+    $colorY:#c3993f;
+    $colorB:#081e3f;
+    
+    
+/****========== End Custom Styles ===========*****/
+
+
+.center-footer {
+    display: block;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: $colorB;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 9999;
+    @include desktop-xlarge(){
+        display: flex;
+    }
+}
+.only-tablet {
+    display: block;
+    @include desktop-xlarge(){
+        display: none;
+    }
+}
+
+.logo-extra {
+    color: $colorY;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-decoration: none;
+    /* text-shadow: 1px 1px 2px $colorY; */
+}
+
+.attribution,
+.date-extra{
+    font-size: 12px;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}

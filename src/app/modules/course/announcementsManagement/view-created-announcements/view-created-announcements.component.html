@@ -1,0 +1,19 @@
+<div class="flexbox-row">
+    <h2 class="mt-4 t-class">Manage Announcements</h2>
+
+    <div *ngFor="let announcements of groupedAnnouncements | keyvalue; let gindex = index" class="announcement">
+        <div *ngIf="gindex == 0" style="background-color:white; padding-bottom: 10px">Total announcements: {{groupedAnnouncements.size}}</div>
+        <span class="ml-2">Id: {{announcements.key}}</span>
+        <h4 class="ml-2">Courses: </h4>
+        <div class="p-2" *ngFor="let announcementObj of announcements.value; let aindex = index">
+            <span class="ml-2">{{announcementObj.course_name}}<span *ngIf="aindex != announcements.value.length - 1">,</span></span>
+            <h4 *ngIf="aindex == announcements.value.length - 1"><hr>Announcement </h4>
+            <div class="p-2 m-2" *ngIf="aindex == announcements.value.length - 1" [innerHTML]="announcementObj.content" style="padding-top:10px; background-color:white">
+            </div>
+            <div class="p-2">
+                <button *ngIf="aindex == announcements.value.length - 1" (click)="editAnnouncement(announcementObj.announcement_id, announcements.value)" class="btn btn-success btn-extra m-1">Edit</button>
+                <button *ngIf="aindex == announcements.value.length - 1" (click)="deleteAnnouncement(announcementObj.announcement_id)" class="btn btn-danger btn-extra m-1">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

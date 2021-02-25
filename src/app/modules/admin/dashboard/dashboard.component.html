@@ -1,0 +1,117 @@
+<!-- <h2 class="center-form">Admin Dashboard</h2> -->
+
+<!-- <div *ngIf="isAdmin" class="center-form"> -->
+
+<div class="center-table-row">
+    <app-sidebar-admin ></app-sidebar-admin>
+    <div class="center-table-column">
+        <!-- <div *ngIf="currentUser"> -->
+        <h2 class="course-style t-class">Course Manager</h2>
+        <nav class="nav flex-column col-sm-1">
+            <a routerLink="/admin/create-course" routerLinkActive="active" class="nav-link btn btn-sm btn-success mb-2"><i
+                    class="fas fa-plus-circle"></i> Create New Course</a>
+        </nav>
+
+        <!-- </div> -->
+
+        <table class="table table-extra no-tablet">
+            <thead>
+                <tr class="table-header" >
+                    <ng-container *ngFor="let colName of displayedColumns"  scope="col">
+                        <th class="dontShowThis" *ngIf="colName =='description'; else elsePrintColName" >
+                            <!--<p> Do nothing! </p>-->
+                        </th>
+                        <ng-template #elsePrintColName>
+                            <th >{{ colName }}</th>
+                        </ng-template>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let course of courses.res; let i = index" class="trstyle">
+                    <th scope="row">{{ course.id }}</th>
+                    <td style="max-width: 125px; word-wrap: break-word;">{{ course.name }}</td>
+                   <!-- <td style="max-width: 200px; word-wrap: break-word;">{{ course.description }}</td> -->
+                    <td>{{ course.seats }}</td>
+                    <td>{{ course.start_date }}</td>
+                    <td>{{ course.end_date }}</td>
+                    <td class="display-btn" >
+                        <button type="button" (click)="editCourse(course.id)" class="btn btn-primary btn-extra"><i
+                                class="fas fa-edit"></i> Edit</button>
+                        <button type="button" (click)="deleteCourse(course.id)" class="btn btn-danger btn-extra"><i
+                                class="fas fa-minus-circle"></i> Delete</button>
+                        <button type="button" (click)="pendingEnrollment(course.id)" class="btn btn-warning btn-extra">
+                            <span *ngIf="students[i] > 0" class="badge badge-light">{{students[i]}}</span> Pending</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+<!--------------------------------------- Mobile -------------------------------------------------->
+
+<div class="mobile-style tablet-mobile">
+    <div *ngFor="let course of courses.res; let i = index" class="ngfor-table">
+        <div class="tablet-mobile-header">
+            <p class="center-text mb-0" >{{ course.name }}</p>
+        </div>
+        <div class="tb-border ">
+            <p class="name-style mb-0">ID <span class="float-right">{{ course.id }}</span></p>
+        </div>
+        <div class="tb-border ">
+            <p class="name-style align-baseline mb-0">SEATS<span class="float-right">{{ course.seats }}</span></p>
+        </div>
+        <div class="tb-border">
+            <p class="name-style mb-0">START<span class="float-right">{{ course.start_date }}</span></p>
+        </div>
+        <div class="tb-border">
+            <p class="name-style mb-0">END<span class="float-right">{{ course.end_date }}</span></p>
+        </div>
+        <div class="display-btn" >
+            <div class="btn-actions-style">
+                <button type="button" (click)="editCourse(course.id)" class="btn btn-primary btn-extra w60px"><i
+                    class="fas fa-edit"></i> Edit</button>
+                <button type="button" (click)="deleteCourse(course.id)" class="btn btn-danger btn-extra w60px"><i
+                        class="fas fa-minus-circle"></i> Delete</button>
+                <button type="button" (click)="pendingEnrollment(course.id)" class="btn btn-warning btn-extra w120px">
+                    <span *ngIf="students[i] > 0" class="badge badge-light">{{students[i]}}</span> Pending</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!------------------------------------- End Mobile ---------------------------------------------------------------------->
+
+        <nav aria-label="Page navigation course-library">
+            <ul class="pagination">
+
+                <ng-container *ngIf="page == 0; else elseBlock">
+                    <li class="page-item disabled"><button class="page-link"
+                            (click)="fetchPageCourses(page-1)">Previous</button></li>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <li class="page-item"><button class="page-link" (click)="fetchPageCourses(page-1)">Previous</button>
+                    </li>
+                </ng-template>
+
+                <ng-container *ngFor="let maxPages of maxPagesArray; let i = index">
+                    <li class="page-item"><button class="page-link" (click)="fetchPageCourses(i)">{{i+1}}</button></li>
+                </ng-container>
+
+                <ng-container *ngIf="page == maxPages - 1; else elseBlock2">
+                    <li class="page-item disabled"><button class="page-link"
+                            (click)="fetchPageCourses(page+1)">Next</button></li>
+                </ng-container>
+                <ng-template #elseBlock2>
+                    <li class="page-item"><button class="page-link" (click)="fetchPageCourses(page+1)">Next</button>
+                    </li>
+                </ng-template>
+
+            </ul>
+        </nav>
+    </div> <!--center-table-column-->
+</div> <!--center-table-row-->
+
+
+
+
+       

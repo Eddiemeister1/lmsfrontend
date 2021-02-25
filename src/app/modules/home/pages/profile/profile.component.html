@@ -1,0 +1,10 @@
+<p>Your Profile</p>
+
+<form [formGroup]="pdfForm" method="post" enctype="multipart/form-data" (ngSubmit)="addPdf()">
+
+        <div class="form-group">
+                <label for="file">Choose file to upload</label>
+                <input type="file" id="file" class="form-control" name="file" (change)="handleFileInputUpdate($event)">
+                <button type="submit" class="btn btn-success"><i class="fas fa-plus-circle"></i> Submit</button>
+        </div>
+</form>

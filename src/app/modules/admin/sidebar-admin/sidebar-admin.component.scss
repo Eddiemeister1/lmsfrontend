@@ -1,0 +1,226 @@
+/****========== Custom Styles ===========*****/
+
+/** Responsive BreakPoints **/
+@mixin mobile {
+@media (max-width: 568px) { @content; }
+}@mixin tablet {
+@media (min-width: 768px) { @content; }
+}@mixin tablet-large {
+@media (min-width: 900px) { @content; }
+}@mixin desktop {
+@media (min-width: 1024px) { @content; }
+}@mixin desktop-large {
+@media (min-width: 1200px) { @content; }
+}@mixin desktop-xlarge {
+@media (min-width: 1440px) { @content; }
+}@mixin desktop-xxlarge {
+@media (min-width: 1600px) { @content; }
+}@mixin desktop-xxxlarge {
+@media (min-width: 1800px) { @content; }
+} 
+
+/** App Colors **/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+/**** End Custom Styles *****/
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
+.toggle-wrap {
+  padding: 10px;
+  position: absolute;
+  cursor: pointer;
+  float: left;
+
+  /*disable selection*/
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.toggle-bar,
+.toggle-bar::before,
+.toggle-bar::after,
+.toggle-wrap.active .toggle-bar,
+.toggle-wrap.active .toggle-bar::before,
+.toggle-wrap.active .toggle-bar::after {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+.toggle-bar {
+  width: 8px;
+  margin: 10px 0;
+  position: relative;
+  border-top: 6px solid #303030;
+  display: block;
+  z-index: 9999;
+}
+.toggle-bar::before,
+.toggle-bar::after {
+  content: "";
+  display: block;
+  background: #303030;
+  height: 6px;
+  width: 8px;
+  position: absolute;
+  top: -16px;
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -ms-transform-origin: 13%;
+  -webkit-transform-origin: 13%;
+  transform-origin: 13%;
+}
+.toggle-bar::after {
+  top: 4px;
+}
+.toggle-wrap.active .toggle-bar {
+  border-top: 6px solid transparent;
+}
+.toggle-wrap.active .toggle-bar::before {
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.toggle-wrap.active .toggle-bar::after {
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+
+aside {
+  position: absolute;
+  width: 220px;
+  height: 400px;
+  background: $colorY;
+//  top: 130px;
+  border-top-right-radius: 610px;
+  border-bottom-right-radius: 610px;
+//  bottom: 0;
+  box-sizing: border-box;
+  padding-top: 70px;
+  transition: all 0.4s ease;
+  box-shadow: 2px 1px 10px 3px #081e3fa3;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  z-index: 99;
+}
+
+aside.active {
+  left: -300px;
+}
+
+aside a {
+  display: block;
+  padding: .5rem 0 0 1.5rem;
+  text-decoration: none;
+  font-size: 1rem;
+  color: #8a6515;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+}
+
+.mt90px{
+  margin-top: 90px;
+}
+
+aside a:hover {
+  color: #ffffff;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+}
+
+
+/******************** toggle menu *******************************************/ 
+
+#menuToggle {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 10px;
+  z-index: 9999;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input {
+  display: block;
+  width: 40px;
+  height: 45px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+
+  cursor: pointer;
+
+  opacity: 0; 
+  z-index: 2; 
+
+  -webkit-touch-callout: none;
+}
+
+#menuToggle span {
+  display: block;
+  width: 10px;
+  height: 8px;
+  margin-bottom: 5px;
+  position: relative;
+  background: $colorB;
+  border-radius: 50%;
+  z-index: 1;
+  transform-origin: 4px 0px;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+
+// Transform all the slices of hamburger
+// into a crossmark.
+
+#menuToggle input:checked ~ span {
+  opacity: 1;
+  transform: rotate(-45deg) translate(-2px, -1px);
+  background: #232323;
+  width: 26px;
+  border-radius: 3px;
+}
+
+
+// But let's hide the middle one.
+
+#menuToggle input:checked ~ span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+
+// last one go the other direction
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  transform: rotate(45deg) translate(0, -1px);
+  top: -18px;
+}

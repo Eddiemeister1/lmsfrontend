@@ -1,0 +1,437 @@
+<div class="center-table-row">
+    <app-sidebar></app-sidebar>
+    <div class="center-table-column mb-5">
+    <!-- HEADER -->
+    <h2 class="t-class mt-4 mb-4"> Modules </h2>
+    <div class="flexbox-top-container">
+        <div *ngIf="currentUser && (isAdmin || isInstructor)">
+            <button (click)="createModule(courseId)" class="btn btn-no-color"><i class="fas fa-plus-circle"></i> Create Module</button>
+        </div>
+    </div>
+
+    <!-- <mat-vertical-stepper [linear]="isStudent" [selectedIndex]="(this.filteredModuleProgrss[0] === undefined) ? 0 : ((this.filteredModuleProgrss[0].mod_number) - 1)" #timelineStepper> -->
+        
+        <div class="course-Progress mb-4" [innerHTML]="showTEXTCompleted" id="courseProgress"></div>
+
+        <mat-vertical-stepper [linear]="isStudent" [selectedIndex]="pickStepperIndex()" #timelineStepper>
+        <mat-step *ngFor="let module of modules; let index = index" [completed]="this.findModuleStatusArray(module.module_number)">
+            
+            <!-- MODULE CONTENT WITHIN STEPPER-->
+            <ng-container *ngIf="!moduleLocked[index] || isAdmin || isInstructor || this.findModuleStatusArray(module.module_number - 1); else lockedBlock">
+                <span *ngIf="!moduleLocked[index] && (isAdmin || isInstructor); else lockedBlock0" class="availability-date">locked until: {{module.lockedUntil}}</span>
+
+                <ng-template #lockedBlock0>
+                    <span *ngIf="isAdmin || isInstructor" class="availability-date">locked until: {{module.lockedUntil}}</span>
+                </ng-template>
+                <div class="flexbox-options">
+    
+                    <!--FORM CONTENT IN MODAL FOR VIDEO ADD-->
+                    <ng-template #contentVideoAdd let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Youtube Video</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="videoForm" class="col">
+    
+                                <div class="alert alert-info">
+                                    <p>Valid youtube links are of the formats:<br> https://youtu.be/*********** <br>And <br>https://www.youtube.com/watch?v=***********</p>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="link"><span style="color: red">*</span>Link</label>
+                                    <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && v.link.errors, 'is-valid': validLink }" required formControlName="link" #link (keyup)="handleValidLink($event)">
+                                    <div *ngIf="submitted && v.link.errors" class="invalid-feedback">
+                                        <div *ngIf="v.link.errors.required">Link is required</div>
+                                    </div>
+                                    <div *ngIf="validLink" class="valid-feedback">
+                                        Valid youtube link
+                                    </div>
+                                </div>
+    
+                                <div *ngIf="invalidLink && !validLink" class="alert alert-danger">
+                                    Invalid Youtube Link
+                                </div>
+                            
+    
+    
+                                <button *ngIf="isAdmin || isInstructor" type="submit" (click)="addVideo(link.value, module.module_id)" class="btn btn-primary btn-extra"><i class="fas fa-plus-circle"></i> Add Video</button>
+                                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light btn-extra" (click)="modal.close('Close click')">Close</button>
+                        </div>
+                    </ng-template>
+                    <button *ngIf="isAdmin || isInstructor" class="btn btn-no-color" (click)="open(contentVideoAdd)"> Add Video </button>
+                    
+                    <!--END OF FORM CONTENT IN MODAL FOR VIDEO ADD-->
+                    <!-- innerpdf.pdfid-->
+                    <!--FORM CONTENT IN MODAL FOR PDF ADD-->
+                    <ng-template #contentPdfAdd let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add PDF File</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+    
+                            <form [formGroup]="pdfForm" class="col"> <!--method="POST" enctype="multipart/form-data">-->
+    
+                                <div class="form-group">
+                                    <label for="pdf"><span style="color: red">*</span>Insert PDF link</label>
+                                    <input id="theFile" type="text" class="form-control" formControlName="pdf" [ngClass]="{ 'is-invalid': submitted && p.pdf.errors }" name="pdf" #pdf required>
+                                    <div *ngIf="submitted && p.pdf.errors" class="invalid-feedback">
+                                        <div *ngIf="p.pdf.errors.required">Pdf is required</div>
+                                    </div>
+                                </div>
+    
+                            
+                                <button type="submit" class="btn btn-primary btn-extra" (click)="addPdf(pdf.value, module.module_id)"><i class="fas fa-plus-circle"></i> Add PDF</button>
+                            </form>
+    
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light btn-extra" (click)="modal.close('Close click')">Close</button>
+                        </div>
+                    </ng-template>
+                    <button *ngIf="isAdmin || isInstructor" class="btn btn-no-color" (click)="open(contentPdfAdd)"> Add PDF </button>
+                    <!--END OF FORM CONTENT IN MODAL FOR PDF ADD-->
+    
+                    <!--FORM CONTENT IN MODAL FOR SURVEY ADD-->
+                    <ng-template #contentSurveyAdd let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Qualtrics Quiz/Exam</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="surveyForm" class="col">
+    
+                                <div class="alert alert-info">
+                                    <p>Valid Qualtrics links are of the formats:<br> https://fiu.qualtrics.com/jfe/form/******************</p>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="name"><span style="color: red">*</span>Name</label>
+                                    <input type="text" class="form-control"  formControlName="name" #name [ngClass]="{ 'is-invalid': submitted && s.name.errors }" required>
+                                    <div *ngIf="submitted && s.name.errors" class="invalid-feedback">
+                                        <div *ngIf="s.name.errors.required">Name is required</div>
+                                    </div>
+                                </div>
+    
+    
+                                <div class="form-group">
+                                    <label for="link"><span style="color: red">*</span>Link</label>
+                                    <input type="text" class="form-control"  formControlName="link" #link [ngClass]="{ 'is-invalid': submitted && s.link.errors, 'is-valid': validQuiz }" required (keyup)="handleValidQuiz($event)">
+                                    <div *ngIf="submitted && s.link.errors" class="invalid-feedback">
+                                        <div *ngIf="s.link.errors.required">Link is required</div>
+                                    </div>
+                                    <div *ngIf="validQuiz" class="valid-feedback">
+                                        Valid Qualtrics link
+                                    </div>
+                                </div>
+    
+                                <div *ngIf="invalidQuiz && !validQuiz" class="alert alert-danger">
+                                    Invalid Qualtrics Link
+                                </div>
+                            
+                                <button *ngIf="isAdmin || isInstructor" type="submit" (click)="addSurvey(name.value, link.value, module.module_id)" class="btn btn-primary btn-extra"><i class="fas fa-plus-circle"></i> Add Quiz</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light btn-extra" (click)="modal.close('Close click')">Close</button>
+                        </div>
+                    </ng-template>
+                    <button *ngIf="isAdmin || isInstructor" class="btn btn-no-color" (click)="open(contentSurveyAdd)"> Add Quiz/Exam </button>
+                    <!--END OF FORM CONTENT IN MODAL FOR SURVEY ADD-->
+    
+                </div>
+    
+                <!--CONTENT IN EACH MODULE-->
+                <div class="flexbox-item" *ngIf="!toggleContent[index]; else moduleBlock" (click)="openModule(index)" style="cursor:pointer; clear:right">
+                    <!-- <i class="fas fa-caret-right"></i> <strong>Module {{ module.module_number }} </strong>| {{ module.module_title }} -->
+
+                </div>
+                <ng-template #moduleBlock>
+                    <div class="flexbox-item" (click)="openModule(index)" style="cursor:pointer; clear:right">
+                        <!-- <i class="fas fa-caret-down"></i> <strong>Module {{ module.module_number }} </strong>| {{ module.module_title }} -->
+
+                    </div>
+                </ng-template>
+                <!-- <div class="flexbox-subcontainer" *ngIf="toggleContent[index]"> -->
+                    <div class="flexbox-subcontainer" *ngIf="true">
+                    <!--RESOURCES PDF CONTENT-->
+                    <div class="flexbox-resources" *ngFor="let pdf of safePdfs | keyvalue; let index = index">
+                        <div *ngIf="pdf.key == module.module_id">
+                            <div class="flexbox-resources-inner" *ngFor="let innerpdf of pdf.value; let j = index">
+                                <i class="fas fa-paperclip icon-style"></i>
+    
+                                <ng-template #contentPdf let-modal>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title"> {{module.module_title}} - Pdf {{j + 1}}</h4>
+                                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item" width="780" height="480" [src]="innerpdf.pdf"></iframe>
+                                            <!--<a [href]="innerpdf.pdf">Link</a>-->
+
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id = "done" type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+                                    </div>
+
+                                </ng-template>
+                              
+                                <!--<button class="btn btn-primary" (click)="open(contentPdf)">View Pdf {{j + 1}}</button>-->
+                                <a [href]="innerpdf.pdf" target="_blank" (click)="openPdfinWindow(innerpdf.rawPdf, innerpdf.pdf_id)" class="btn btn-primary btn-modules-inner">View Pdf {{j+1}}</a>
+                               
+                                <ng-container *ngIf="currentUser.role == 'student' ">
+                                    <i *ngIf="this.allPdfProgress.get(innerpdf.pdf_id) " class="fas fa-check complete-check"></i>
+                                </ng-container>
+                                
+                                <button *ngIf="isAdmin || isInstructor" class="btn btn-danger btn-no-color no-border-backbround flexbox-module-options" (click)="deletePDF(innerpdf.pdf_id, j, module.module_id)">Delete</button>
+    
+    
+                                <!--FORM CONTENT IN MODAL FOR PDF EDIT-->
+                                <ng-template #contentPdfUpdate let-modal>
+
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit PDF</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="updatePdfForm" class="col-9">
+    
+                                        <div class="form-group">
+                                            <label for="pdf"><span style="color: red">*</span>Insert new PDF link</label>
+                                            <input id="theFile" type="text" class="form-control" formControlName="pdf" [ngClass]="{ 'is-invalid': submitted && pu.pdf.errors }" name="pdf" #pdf required>
+                                            <div *ngIf="submitted && pu.pdf.errors" class="invalid-feedback">
+                                                <div *ngIf="pu.pdf.errors.required">Pdf is required</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <button type="submit" class="btn btn-primary" (click)="updatePDF(pdf.value, innerpdf.pdf_id, module.module_id)"><i class="fas fa-plus-circle"></i> Update PDF</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+                                </div>
+                            </ng-template>
+                            <button *ngIf="isAdmin || isInstructor" class="btn btn-no-color no-border-backbround flexbox-module-options" (click)="openUpdatePDF(contentPdfUpdate, innerpdf.rawPdf)">Edit</button>
+                            <!--END OF FORM CONTENT IN MODAL FOR PDF EDIT-->
+    
+                            </div>
+                        </div>
+                    </div>
+                    <!--END OF RESOURCES PDF CONTENT-->
+    
+                    <!--YOUTUBE LINKS CONTENT-->
+                    <div class="flexbox-links" *ngFor="let link of safeLinks | keyvalue; let index = index">
+                        <div *ngIf="link.key == module.module_id">
+                            <div class="flexbox-links-inner" *ngFor="let innerlink of link.value; let j = index">
+                                <i class="fab fa-youtube icon-style"></i>    
+    
+                                <ng-template #contentVideo let-modal>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">{{module.module_title}} - Video {{j + 1}}</h4>
+                                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item" width="780" height="480" [src]="innerlink.videoUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+                                    </div>
+                                </ng-template>
+    
+                                <!--<label>{{(this.allVideoProgress.get(innerlink.video_id)) ? "DONE" : "NOT DONE"}}</label>-->
+                                <ng-container *ngIf="currentUser.role == 'student' ">
+                                    <i *ngIf="this.allVideoProgress.get(innerlink.video_id)" class="fas fa-check complete-check"></i>
+                                </ng-container>
+                                <button class="btn btn-primary btn-modules-inner" (click)="(!isAdmin && !isInstructor) ? openYtPlayer(module.module_title, j, innerlink) : open(contentVideo)">Watch Video {{j + 1}}</button>
+                                <!-- <button [disabled]="!isAdmin && !isInstructor" class="btn btn-primary" (click)="openYtPlayer(module.module_title, j, innerlink.videoUrl)">Watch Video {{j + 1}}</button> -->
+                                <!-- <button class="btn btn-primary" (click)="open(contentVideo)">Watch Video {{j + 1}}</button> -->
+                                <button *ngIf="isAdmin || isInstructor" class="btn btn-danger btn-no-color no-border-backbround flexbox-module-options" (click)="deleteVideo(innerlink.video_id, j, module.module_id)">Delete</button>
+    
+    
+                                <!--FORM CONTENT IN MODAL FOR VIDEO EDIT-->
+                                <ng-template #contentVideoUpdate let-modal>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit Youtube Video</h4>
+                                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="updateVideoForm" class="col-9">
+                
+                                            <div class="alert alert-info">
+                                                <p>Valid youtube links are of the formats:<br> https://youtu.be/*********** <br>And <br>https://www.youtube.com/watch?v=***********</p>
+                                            </div>
+    
+                                            <div class="form-group">
+                                                <label for="linkInput"><span style="color: red">*</span>New Link</label>
+                                                <input type="text" class="form-control form-control-lg" formControlName="linkInput" #linkInput [ngClass]="{ 'is-invalid': submitted && vu.linkInput.errors, 'is-valid': validLink }" required (keyup)="handleValidLink($event)">
+                                                <div *ngIf="submitted && vu.linkInput.errors" class="invalid-feedback">
+                                                    <div *ngIf="vu.linkInput.errors.required">Link is required</div>
+                                                </div>
+                                                <div *ngIf="validLink" class="valid-feedback">
+                                                    Valid youtube link
+                                                </div>
+                                            </div>
+    
+                                            <div *ngIf="invalidLink && !validLink" class="alert alert-danger">
+                                                Invalid Youtube Link
+                                            </div>
+                                        
+                                            <button type="submit" (click)="updateVideo(linkInput.value, innerlink.video_id, module.module_id)" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Update Video</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+                                    </div>
+                                </ng-template>
+                                <button *ngIf="isAdmin || isInstructor" class="btn btn-success btn-no-color no-border-backbround flexbox-module-options" (click)="openUpdateVideo(contentVideoUpdate, innerlink.url)">Edit</button>
+                                <!--END OF FORM CONTENT IN MODAL FOR VIDEO EDIT-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--END OF YOUTUBE LINKS CONTENT-->
+    
+                    <!--QUIZZES LINKS CONTENT-->
+                    <div class="flexbox-links" *ngFor="let survey of safeSurveys | keyvalue; let index = index">
+                        <div *ngIf="survey.key == module.module_id">
+                            <div class="flexbox-links-inner" *ngFor="let surveyObject of survey.value; let j = index">
+                                <i class="fas fa-paper-plane icon-style"></i>    
+    
+                                <ng-template #contentSurvey let-modal>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">{{module.module_title}} - {{surveyObject.name}}</h4>
+                                        <button type="button" class="close" aria-label="Close" (click)="fetchAndCloseSurvey()">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item" width="780" height="480" [src]="surveyObject.surveyUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" (click)="fetchAndCloseSurvey()">Close here</button>
+                                    </div>
+                                </ng-template>
+                                <!-- openSurvey will create a student-survey-progress only if current user is a student
+                                     and if there is no survey progress for this student in the db-->
+                                                                
+                                <button [disabled]="isStudent && (this.allSurveyProgress.get(surveyObject.survey_id))" class="btn btn-primary btn-modules-inner" (click)="openSurvey(surveyObject.survey_id,contentSurvey)">Take Quiz {{j + 1}}</button>
+                                <!--<label>{{(this.allSurveyProgress.get(surveyObject.survey_id)) ? "DONE" : " NOT DONE"}}</label>-->
+                                <ng-container *ngIf="currentUser.role == 'student' ">
+                                   <i *ngIf="this.allSurveyProgress.get(surveyObject.survey_id)" class="fas fa-check complete-check"></i>
+                                    <!--<ngb-progressbar *ngIf="this.allSurveyProgress.get(surveyObject.survey_id)" class="quiz-score" [striped]="true" [animated]="true" [showValue]="false" type="success" [value]="this.allSurveyScores.get(surveyObject.survey_id)">{{ this.allSurveyScores.get(surveyObject.survey_id) }}%</ngb-progressbar>-->
+                                </ng-container>
+                                <button *ngIf="isAdmin || isInstructor" class="btn btn-danger btn-no-color no-border-backbround flexbox-module-options" (click)="deleteSurvey(surveyObject.survey_id, j, module.module_id)">Delete</button>
+    
+                                <!--FORM CONTENT IN MODAL FOR QUIZ EDIT-->
+                                <ng-template #contentSurveyUpdate let-modal>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit Quiz/Exam</h4>
+                                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="updateSurveyForm" class="col-9">
+                
+                                            <div class="alert alert-info">
+                                                <p>Valid Qualtrics links are of the formats:<br> https://fiu.qualtrics.com/jfe/form/******************</p>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="name"><span style="color: red">*</span>New Name</label>
+                                                <input type="text" class="form-control form-control-lg" formControlName="name" #name [ngClass]="{ 'is-invalid': submitted && su.name.errors }" required>
+                                                <div *ngIf="submitted && su.name.errors" class="invalid-feedback">
+                                                    <div *ngIf="su.name.errors.required">Name is required</div>
+                                                </div>
+                                            </div>
+    
+                                            <div class="form-group">
+                                                <label for="link"><span style="color: red">*</span>New Link</label>
+                                                <input type="text" class="form-control form-control-lg" formControlName="link" #link [ngClass]="{ 'is-invalid': submitted && su.link.errors, 'is-valid': validQuiz }" required (keyup)="handleValidQuiz($event)">
+                                                <div *ngIf="submitted && su.link.errors" class="invalid-feedback">
+                                                    <div *ngIf="su.link.errors.required">Link is required</div>
+                                                </div>
+                                                <div *ngIf="validQuiz" class="valid-feedback">
+                                                    Valid Qualtrics link
+                                                </div>
+                                            </div>
+    
+                                            <div *ngIf="invalidQuiz && !validQuiz" class="alert alert-danger">
+                                                Invalid Qualtrics Link
+                                            </div>
+                                        
+                                            <button type="submit" (click)="updateSurvey(name.value, link.value, surveyObject.survey_id, module.module_id)" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Update Quiz/Exam</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+                                    </div>
+                                </ng-template>
+                                <button *ngIf="isAdmin || isInstructor" class="btn btn-success btn-no-color no-border-backbround flexbox-module-options" (click)="openUpdateSurvey(contentSurveyUpdate, surveyObject.name, surveyObject.url)">Edit</button>
+                                <!--END OF FORM CONTENT IN MODAL FOR QUIZ EDIT-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--END OF QUIZZES LINKS CONTENT-->
+    
+                </div>  
+                <div class="flexbox-item-module-actions" *ngIf="currentUser">
+                    <button type="button" (click)="viewDiscussion(module.course_id, module.module_id)" class="btn btn-primary view-discussion"><i class="fas fa-comments"></i> View Discussion</button>
+                </div>
+                <div class="flexbox-item-module-actions" *ngIf="currentUser">
+                    <button *ngIf="isAdmin || isInstructor" type="button" (click)="editModule(module.course_id, module.module_id)" class="btn btn-no-color"><i class="fas fa-edit"></i> Edit</button>
+                    <button *ngIf="isAdmin || isInstructor" type="button" (click)="deleteModule(module.module_id, module.module_number)" class="btn btn-no-color"><i class="fas fa-minus-circle"></i> Delete</button>
+
+                </div>
+                <!--END OF CONTENT IN EACH MODULE-->
+            </ng-container>
+    
+                <ng-template #lockedBlock>
+                    <span style="color: red;">locked until: {{module.lockedUntil}}</span>
+                    <div class="flexbox-item" (click)="openModule(index)" style="cursor: not-allowed; opacity: 0.5;">
+                        <!-- <i class="fas fa-caret-right"></i> <strong>Module {{ module.module_number }} </strong>| {{ module.module_title }} -->
+                    </div>
+                </ng-template>
+            <!-- END MODULE CONTENT WITHIN STEPPER-->
+            <ng-template matStepLabel>
+                <!-- <span placement="right" ngbTooltip=" Tooltip on top"> -->
+                    <span>
+                    <strong>Module {{ module.module_number }} </strong> <span class="not-in-mobile">| {{ module.module_title }}</span> 
+                    </span>                <!-- </span> -->
+                
+            </ng-template>
+        </mat-step>
+
+    </mat-vertical-stepper>
+
+
+    </div> <!--center-table-column-->
+
+</div> <!--center-table-row-->

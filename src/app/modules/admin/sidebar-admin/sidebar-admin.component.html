@@ -1,0 +1,22 @@
+
+<!-- *********** OLD SideNav ************* -->
+<!--<div id="mySidenav" class="sidenav sidenav-extra">
+    <a class="nav-link" id="dashboard" routerLink="/admin/dashboard" routerLinkActive="active"><i class="fas fa-book"></i> Course Manager</a>
+    <a class="nav-link" id="promotion"routerLink="/admin/promotion" routerLinkActive="active"><i class="fas fa-users"></i> User Manager</a>   
+</div>-->
+
+<!-- *********** SideNav ************* -->
+<div class="toggle-wrap" (click)="toggleMenu(this)">
+    <!--<span class="toggle-bar"></span>-->
+    <div id="menuToggle">
+        <input type="checkbox"/>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+</div>
+<aside class="active" id="mySidenav">
+    <a class="aside-list" id="dashboard" routerLink="/admin/dashboard" routerLinkActive="active"><i class="fas fa-book mt90px"></i> Course Manager</a>
+    <a class="aside-list" id="promotion" routerLink="/admin/promotion" routerLinkActive="active"><i class="fas fa-users"></i> User Manager</a>
+</aside>

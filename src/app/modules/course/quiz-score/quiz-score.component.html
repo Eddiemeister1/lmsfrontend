@@ -1,0 +1,11 @@
+<div class="center-form">
+    <h2> Student: {{(currentUser | async)?.f_name}} {{(currentUser | async)?.l_name}}</h2>
+    <ng-container *ngIf="!isError">
+        <p style="font-size:larger">Your score is: {{ this.showingScore }}%</p>
+        <hr>
+        <p>Please close this window to continue with the course.</p>
+    </ng-container>
+    <ng-container *ngIf="isError">
+        <p><strong>Error!</strong> You have already taken this quiz!</p>
+    </ng-container>
+</div>

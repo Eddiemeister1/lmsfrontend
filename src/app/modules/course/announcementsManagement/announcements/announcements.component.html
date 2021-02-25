@@ -1,0 +1,51 @@
+<div class="center-table-row">
+    <app-sidebar></app-sidebar>
+
+    <div class='inbox-right-container'>
+        <div class='header'>
+            <h2 class='title t-class'>Announcements</h2>
+            <a routerLink="/courses/{{courseId}}/announcements/create" class='create nav-link btn-extra'> <i class="fas fa-edit"></i> Create</a>
+        </div>
+        <!-- NEED TO DO IF STATEMENT FOR IF NO ANNOUNCEMENTS EXIST -->
+        <div *ngFor="let announcement of announcements | async" class='inbox-list'>
+            <div class='inbox-item' (click)="goToExpanded(announcement)">
+                <div class='inbox-top'>
+                    <div *ngIf="announcement.type === 'M' && !announcement.parent_id; else isAnnouncement">
+                        <div *ngIf="currentUser.id === announcement.sender_id; else isReceiver">
+                            <span class="fas fa-paper-plane type-icon" title="Sent"></span>
+                            <span class="author" [innerHTML]="announcement.receiver_name"></span>
+                        </div>
+                        <ng-template #isReceiver>
+                            <span class="fas fa-envelope type-icon" title="Received"></span>
+                            <span class="author" [innerHTML]="announcement.sender_name"></span>
+                        </ng-template>
+                    </div>
+                   <ng-template #isAnnouncement>
+                        <div *ngIf="announcement.type === 'C'; else isGlobal">
+                            <span class="fas fa-bell type-icon" title="Course Announcement"></span>
+                            <span class='author' [innerHTML]='announcement.user'></span>
+                        </div>
+                        <ng-template #isGlobal>
+                            <span class="fas fa-globe-americas type-icon" title="Global Announcement"></span>
+                            <span class='author' [innerHTML]='announcement.user'></span>
+                        </ng-template>
+                    </ng-template>
+                    <span class='date' [innerHTML]="announcement.changed | date:'EEEE, MMM dd, y - h:mm a':'GMT-0400'"></span>
+                </div>
+                
+                <div class='inbox-bottom'>
+                    <div class='content' *ngIf="announcement.content.length > 200; else contentIsShort">
+                        <span [innerHTML]='announcement.content.substr(0,200)'></span>
+                        <span>...</span>
+                    </div>
+                    <ng-template #contentIsShort>
+                        <div class='content'>
+                            <span [innerHTML]="announcement.content"></span>
+                        </div>
+                    </ng-template>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

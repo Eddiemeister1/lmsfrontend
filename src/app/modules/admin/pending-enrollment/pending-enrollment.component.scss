@@ -1,0 +1,231 @@
+
+/****========== Custom Styles ===========*****/
+
+/**** Responsive BreakPoints ********/
+@mixin mobile {
+@media (max-width: 568px) { @content; }
+}@mixin tablet {
+@media (min-width: 768px) { @content; }
+}@mixin tablet-large {
+@media (min-width: 900px) { @content; }
+}@mixin desktop {
+@media (min-width: 1024px) { @content; }
+}@mixin desktop-large {
+@media (min-width: 1200px) { @content; }
+}@mixin desktop-xlarge {
+@media (min-width: 1440px) { @content; }
+}@mixin desktop-xxlarge {
+@media (min-width: 1600px) { @content; }
+}@mixin desktop-xxxlarge {
+@media (min-width: 1800px) { @content; }
+} 
+
+/**** App Colors ****/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+
+/****========== End Custom Styles ===========*****/
+
+.header-enrollment.mt-4.mb-4 {
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.table {
+    width: 90%;
+    margin: 0 auto 1rem;
+    max-width: 100%;
+    background-color: transparent;
+}
+
+.no-tablet {
+    display: none;
+    @include tablet(){
+        display: table;
+    }
+}
+
+.tablet-mobile {
+    display: block;
+    @include tablet(){
+        display: none;
+    }
+}
+
+.go-back-btn{
+    text-align: center;
+}
+
+.seat-desktop {
+    display: none;
+    @include tablet(){
+        display: flex;
+    }
+}
+
+.seat-mobile {
+    display: flex;
+    @include tablet(){
+        display: none;
+    }
+}
+
+.go-back-btn{
+    text-align: center;
+}
+
+.table-header {
+    background-color: $colorY;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: $colorB;
+}
+
+.w90p{
+    width: 50%!important;
+    @include tablet(){
+        width: 90px!important;
+    }
+}
+
+.btn-extra {
+    width: 90px;
+    padding: 1px 4px;
+    margin: 3px;
+    font-size: 12px;
+    background-color: $colorB;
+    color: white;
+    border: 1px solid $colorB;
+    @include tablet(){
+        width: 90px;
+        margin: 3px;
+    }
+    
+}
+.btn-extra:hover {
+    background-color: $colorB;
+    color: $colorY;
+    border: 1px solid $colorB;
+}
+
+.btn-extra:not(:disabled):not(.disabled):active {
+    background-color: $colorB;
+    color: $colorY;
+    border: 1px solid $colorB;
+}
+
+.btn-extra.focus, .btn-extra:focus {
+    box-shadow: none;
+}
+
+
+
+
+
+/***********************
+** Table
+***********************/
+.table-style{
+    border: none;
+    margin: 0 10px;
+    @include tablet(){
+        border: 1.5px solid #dee2e6;
+        margin: 0 2% 1.2%;
+    }
+}
+
+.table thead th {
+    font-size: 14px;
+    vertical-align: bottom;
+    border-bottom: 1px solid #dee2e6;
+    letter-spacing: 0.5px;
+
+}
+.table td, .table th {
+    font-size: 14px;
+}
+.td-enrollment {
+    padding: 0;
+    border: 0;
+}
+
+.table-line{
+    border-top: none;
+    text-align: end;
+    @include tablet(){
+        border-top: 1px solid #dee2e6;
+    }
+}
+.table-line-top-none{
+    border-top: none;
+   /* @include tablet(){
+        border-top: 1px solid #dee2e6;
+    }*/
+}
+
+.table td, .table th {
+    padding: .2rem;
+}
+
+.table-course {
+    display: block;
+    padding: 20px 10px;
+}
+
+.tr-border {
+    border: 1px solid #dee2e6;
+}
+
+.right-and-padding {
+    text-align: end;
+}
+
+.ngfor-table {
+    margin: 0 10px;
+    margin-bottom: 30px;
+}
+
+.tablet-mobile-header {
+    background-color:$colorY;
+    color: $colorB;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+.tb-border {
+    border-bottom: 1px solid #dee2e6;
+    padding: 0 5px;
+}
+
+.btn-actions-style {
+    position: relative;
+    text-align: center;
+}
+
+.mobile-style {
+    width: 100%;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.padding-10 {
+    padding: 0 10px!important;
+}
+
+.someting {
+    border: none;
+    background-color: white;
+}
+
+.w120px {
+    width: 120px;
+}
+
+.w60px {
+    width: 60px;
+}

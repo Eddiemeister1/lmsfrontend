@@ -1,0 +1,33 @@
+<div class="center-table-row">
+    <app-sidebar></app-sidebar>
+
+    <div class="center-table-column">
+        <div class="flexbox-row">
+            <a *ngIf="isAdmin || isInstructor" routerLink="/courses/{{courseId}}/edit-home" class="btn btn-primary">Edit</a>
+            <ng-container *ngIf="courseContent | async as content">
+                <div [innerHTML]="content.content" style="margin-top: 30px;" class="custom-font clamp-words"></div>
+            </ng-container>
+        </div>
+        <div class="bar-section">
+        <!-- Progress Bars -->
+            <div class="align-self-stretch">
+                <span>Class Average Points</span>
+                <p><ngb-progressbar class="progressBar" type="info" textType="white" [animated]="true" [value]="averagePoints ? averagePoints : 0" [showValue]="true" [striped]="true" height="30px" ></ngb-progressbar></p>
+            </div>
+
+            <div class="align-self-stretch">
+                <span>Group Average Points</span>
+                <p><ngb-progressbar class="progressBar" type="danger" textType="white" [animated]="true" [value]="totalPointsInGroup ? totalPointsInGroup : 0" [showValue]="true" [striped]="true" height="30px" ></ngb-progressbar></p>
+            </div>
+    
+            <div class="align-self-stretch">
+                <span>Your points</span>
+                <p><ngb-progressbar class="progressBar" type="primary" textType="white" [animated]="true" [value]="points ? points : 0" [showValue]="true" [striped]="true" height="30px" ></ngb-progressbar></p>
+            </div>
+        <!-- End Progress Bars -->
+        </div>
+    </div>
+    
+
+   
+</div>

@@ -1,0 +1,325 @@
+/****========== Custom Styles ===========*****/
+
+/**** Responsive BreakPoints ********/
+@mixin mobile {
+@media (max-width: 568px) { @content; }
+}@mixin tablet {
+@media (min-width: 768px) { @content; }
+}@mixin tablet-large {
+@media (min-width: 900px) { @content; }
+}@mixin desktop {
+@media (min-width: 1024px) { @content; }
+}@mixin desktop-large {
+@media (min-width: 1200px) { @content; }
+}@mixin desktop-xlarge {
+@media (min-width: 1440px) { @content; }
+}@mixin desktop-xxlarge {
+@media (min-width: 1600px) { @content; }
+}@mixin desktop-xxxlarge {
+@media (min-width: 1800px) { @content; }
+} 
+
+/**** App Colors ****/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+
+/****========== End Custom Styles ===========*****/
+
+
+
+.disablePagination {
+    display: none;
+}
+/***********************
+** Fonts
+***********************/
+.h2-search-course{
+    font-weight: lighter;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+/***********************
+** Btn and input
+***********************/
+input#search {
+    border-radius: 8px 0 0 8px;
+    -webkit-border-radius: 8px 0 0 8px;
+    -moz-border-radius: 8px 0 0 8px;
+    -ms-border-radius: 8px 0 0 8px;
+    -o-border-radius: 8px 0 0 8px;
+}
+.btn-showAll{
+    height: 30px;
+    padding: 0 1rem;
+    border-radius: 0 8px 8px 0;
+    -webkit-border-radius: 0 8px 8px 0;
+    -moz-border-radius: 0 8px 8px 0;
+    -ms-border-radius: 0 8px 8px 0;
+    -o-border-radius: 0 8px 8px 0;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #081e3f;
+    border-color: #081e3f;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #081e3f;
+    border-color: #081e3f;
+    margin: -2px 0 0;
+    width: 60px;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    color: #c3993f;
+    background-color: #081e3f;
+    border-color: #081e3f;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-success:not(:disabled):not(.disabled):active {
+    color: #c3993f;
+    background-color: #081e3f;
+    border-color: #081e3f;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-success:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+
+.btn-primary:focus,
+.btn-success:focus {
+    box-shadow: none;
+}
+
+.btn-primary.focus, .btn-primary:focus,
+.btn-success.focus, .btn-primary:focus {
+    box-shadow: none;
+}
+
+.btn-danger,
+.btn-success,
+.btn-warning,
+.btn-info {
+    width:auto;
+    text-transform: capitalize;
+    @include tablet(){
+        width: 100px;
+    }
+}
+
+.btn-info.disabled, .btn-info:disabled {
+    color: #000;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-info:hover {
+    color: black;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-info:not(:disabled):not(.disabled):active {
+    color: black;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-info:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+
+.btn-info:focus {
+    box-shadow: none;
+}
+
+.btn-info.focus, .btn-info:focus {
+    box-shadow: none;
+}
+
+.btn-danger.disabled, .btn-danger:disabled {
+    color: black;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-danger:hover {
+    color: black;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-danger:not(:disabled):not(.disabled):active {
+    color: black;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-danger:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+
+.btn-danger:focus {
+    box-shadow: none;
+}
+
+.btn-danger.focus, .btn-danger:focus {
+    box-shadow: none;
+}
+
+.btn-warning.disabled, .btn-warning:disabled {
+    color: #ff0000;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn {
+    padding: 0;
+    font-size: 14px;
+}
+
+.page-link:focus {
+    box-shadow: none;
+}
+
+.page-link {
+    color: rgb(0, 0, 0);
+}
+/***********************
+** Table
+***********************/
+.table-style{
+    border: none;
+    margin: 0 10px;
+    @include tablet(){
+        margin: 0 2% 1.2%;
+        transition: all 0.4s ease;
+        -webkit-transition: all 0.4s ease;
+        -moz-transition: all 0.4s ease;
+        -ms-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+    }
+}
+
+.trstyle:hover {
+    background-color: white;
+    @include tablet(){
+        background-color: #c3973f3b;
+        transition: all 0.4s ease;
+        -webkit-transition: all 0.4s ease;
+        -moz-transition: all 0.4s ease;
+        -ms-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+    }
+}
+
+.table thead th {
+    font-size: 14px;
+    vertical-align: bottom;
+    border-bottom: 1px solid #dee2e6;
+    letter-spacing: 0.5px;
+
+}
+.table td, .table th {
+    font-size: 14px;
+}
+.td-enrollment {
+    padding: 0;
+    border: 0;
+}
+.table {
+    margin-bottom: 0;
+}
+
+.table-header {
+    background: $colorY;
+}
+
+.table-line{
+    border-top: none;
+    text-align: end;
+    @include tablet(){
+        border-top: 1px solid #dee2e6;
+    }
+}
+.table-line-top-none{
+    border-top: none;
+   /* @include tablet(){
+        border-top: 1px solid #dee2e6;
+    }*/
+}
+
+.table td, .table th {
+    padding: .2rem;
+}
+
+.no-tablet {
+    display: none;
+    @include tablet(){
+        display: block;
+    }
+}
+
+.tablet-mobile {
+    display: block;
+    @include tablet(){
+        display: none;
+    }
+}
+
+.table-header {
+    background-color: $colorY;
+}
+
+.table-course {
+    display: block;
+    padding: 20px 10px;
+}
+
+.tr-border {
+    border: 1px solid #dee2e6;
+}
+
+.w600px {
+    width: 600px;
+}
+
+.w25 {
+    width: 25%;
+}
+
+.right-and-padding {
+    text-align: end;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.padding-10 {
+    padding: 0 10px!important;
+}
+
+.course-name{
+    text-align: center;
+    font-weight: 600;
+    //border: 1px solid #dee2e6;
+    background-color: $colorY;
+    letter-spacing: 0.5px;
+}
+
+.someting {
+    border: none;
+    background-color: white;
+}
+
+.search-30H {
+    height: 30px;
+}

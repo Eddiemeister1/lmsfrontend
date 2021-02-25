@@ -1,0 +1,141 @@
+/****========== Custom Styles ===========*****/
+
+/**** Responsive BreakPoints ********/
+@mixin mobile {
+@media (max-width: 568px) { @content; }
+}@mixin tablet {
+@media (min-width: 768px) { @content; }
+}@mixin tablet-large {
+@media (min-width: 900px) { @content; }
+}@mixin desktop {
+@media (min-width: 1024px) { @content; }
+}@mixin desktop-large {
+@media (min-width: 1200px) { @content; }
+}@mixin desktop-xlarge {
+@media (min-width: 1440px) { @content; }
+}@mixin desktop-xxlarge {
+@media (min-width: 1600px) { @content; }
+}@mixin desktop-xxxlarge {
+@media (min-width: 1800px) { @content; }
+} 
+
+/**** App Colors ****/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+
+/****========== End Custom Styles ===========*****/
+
+//welcome text
+.home-welcome{
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 28px;
+    text-shadow: 0px 0px 20px #fbfbfb;
+   @include desktop-xlarge(){
+    font-size: 29px;
+    }
+}
+.announcement-tittle {
+    font-size: 1.45rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 0px 0px 20px #fbfbfb;
+}
+
+.admin-btn-control {
+    margin: 10px;
+    text-align: right;
+}
+.announcement {
+    background-color: #ebebebb0;
+    border: 1px solid #081e3f59;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0;
+    margin-bottom: 10px;
+    max-width: 650px;
+}
+
+.custom-font {
+    padding: 0 10px;
+}
+
+.announcement-user-info {
+   // background: #081e3f;
+   // border: 1px solid #081e3f;
+    color: #081e3f;
+    text-shadow: 0 0 2px #c3993f;
+    font-weight: 400;
+    letter-spacing: 2px;
+    padding: 10px 10px 0;
+    text-align: center;
+}
+/**** btn - browser course ******/
+.btn-home {
+    color: #fff!important;
+    background-color: #081e3f;
+    border-color: #081e3f;
+    margin-top: 20px;
+    padding: 3px 10px;
+    width: 200px;
+}
+
+.btn-home:hover,
+.btn-danger:hover,
+.btn-success:hover {
+    color: #c3993f;
+    background-color: #081e3f;
+    border-color: #081e3f;
+}
+.btn-home.focus, .btn-home:focus {
+    box-shadow: none;
+}
+.btn-home:not(:disabled):not(.disabled):active:focus,
+.btn-success:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+.btn-home:not(:disabled):not(.disabled):active,
+.btn-success:not(:disabled):not(.disabled):active {
+    color: #c3993f;
+    background-color: #081e3f;
+    border-color: #081e3f;
+}
+
+/************ btn delete ************/ 
+.btn-danger {
+    color: #081e3f;
+    background-color: #081e3f00;
+    border-color: #081e3f59;
+    padding: 1px 10px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0 2px;
+}
+.btn-danger.focus, .btn-danger:focus {
+    box-shadow: none;
+}
+
+/************ btn edit ************/ 
+.btn-success {
+    color: #081e3f;
+    background-color: #081e3f00;
+    border-color: #081e3f59;
+    padding: 1px 10px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0 2px;
+}
+.btn-success.focus, .btn-success:focus {
+    box-shadow: none;
+}
+
+.custom-font {
+    
+    font-size: 1rem;
+}
+

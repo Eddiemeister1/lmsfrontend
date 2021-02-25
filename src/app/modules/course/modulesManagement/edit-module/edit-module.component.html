@@ -1,0 +1,46 @@
+<div class="center-form">
+    <h2 class=" t-class">Edit Module {{moduleNumber}}</h2>
+    <form [formGroup]="updateForm" class="col-sm-4">
+    
+        <div class="form-group">
+            <label for="number">Number</label>
+            <input type="text" class="form-control"  formControlName="number" #number [ngClass]="{ 'is-invalid': submitted && mu.number.errors }" required>
+            <div *ngIf="submitted && mu.number.errors" class="invalid-feedback">
+                <div *ngIf="mu.number.errors.required">Number is required</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="title">Title</label>
+            <textarea class="form-control"  formControlName="title" #title [ngClass]="{ 'is-invalid': submitted && mu.title.errors }" required></textarea>
+            <div *ngIf="submitted && mu.title.errors" class="invalid-feedback">
+                <div *ngIf="mu.title.errors.required">Title is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="extraCreditPoints">Extra Credit Points</label>
+            <input type="text" class="form-control"  formControlName="extraCreditPoints" #extraCreditPoints [ngClass]="{ 'is-invalid': submitted && mu.extraCreditPoints.errors }" required>
+            <div *ngIf="submitted && mu.extraCreditPoints.errors" class="invalid-feedback">
+                <div *ngIf="mu.extraCreditPoints.errors.required">Extra Credit Points is required</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="lockedUntil">Locked Until</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" ngbDatepicker (dateSelect)="onDateSelect($event)" #d="ngbDatepicker" readonly [value]="givenDate | async" formControlName="lockedUntil" #lockedUntil>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary far fa-calendar-alt" (click)="d.toggle()" type="button"></button>
+                </div>
+                <!--<div *ngIf="submitted && mu.lockedUntil.errors" class="invalid-feedback">
+                    <div *ngIf="mu.lockedUntil.errors.required">Locked Until is required</div>
+                </div>-->
+            </div>
+        </div>
+    
+        <button type="submit" (click)="updateModule(number.value, title.value, extraCreditPoints.value, lockedUntil.value)" class="btn btn-primary btn-extra"><i class="fas fa-plus-circle"></i> Update Module</button>
+        <!--<a routerLink="/admin" class="btn btn-warning"><i class="fas fa-arrow-circle-left"></i> Go Back</a>-->
+    </form>
+    </div>

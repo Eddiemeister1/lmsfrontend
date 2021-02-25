@@ -1,0 +1,39 @@
+<div class="hero-image">
+    <div class="container" id="home-Page">
+        <div class="row justify-content-center">
+            <div class="col-12 center-form mt-4">
+                <h2 class="home-welcome mt-3 mb-3" [@enter0]>Welcome to LMS FIU</h2>
+                <div [ngSwitch]="animation" [@enter2]>
+                    <img  *ngSwitchCase="'rubberBand'" [@rubberBand]="animationState" src="../../../../../assets/images/FIU_Panther_Logo.png" alt="FIU_Panther_Logo" width="300"
+                    height="350">
+                </div>
+                
+                <a [@enter3] routerLink="/course-library" class="btn btn-home">Browse Courses</a>
+            </div>
+        </div>
+        <div class="row justify-content-center" [@enter3]>
+            <div class="col-12 center-form" >
+                <ng-container *ngIf="currentUser">
+                    <a [@enter3] *ngIf="currentUser.role == 'admin'" routerLink="/create-announcement" class="btn btn-home mb-2">Create Announcement</a>
+                </ng-container>
+                <h2 class="announcement-tittle mt-5 mb-3" >Announcements</h2>
+                <div *ngFor="let announcement of globalAnnouncements" class="announcement">
+                    <p class="announcement-user-info">{{announcement.user  }}  <span class="ml-2 mr-2">|</span>  {{  announcement.created >= announcement.changed ? (announcement.created | date:'short') : (announcement.changed | date:'short')}}</p>
+                    <div [innerHTML]="announcement.content" class="custom-font"></div>
+                    <div class="admin-btn-control" *ngIf="currentUser.role == 'admin'">
+                        <a routerLink="/edit-announcement/{{announcement.id}}" class="btn btn-success">Edit</a>
+                        <button type="button" (click)="deleteAnnouncement(announcement.id)"
+                            class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div [@enter3] (@enter3.done)="animationState = !animationState">
+            <div appearance="outline">
+            <div [(ngModel)]="animation" (ngModelChange)="animate()">
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

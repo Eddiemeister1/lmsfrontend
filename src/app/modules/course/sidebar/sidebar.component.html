@@ -1,0 +1,60 @@
+
+<!--  Old Sidenav
+<div id="mySidenav" class="sidenav">
+    <a class="nav-link" id="home" [routerLink]="['/courses', courseId]" routerLinkActive="active"><i class="fas fa-home"></i> Home</a>
+    <a class="nav-link" id="modules" routerLink="/courses/{{courseId}}/modules" routerLinkActive="active"><i class="fas fa-book-open"></i> Modules</a>
+    <a class="nav-link" id="announcements" routerLink="/courses/{{courseId}}/announcements" routerLinkActive="active"><i class="fas fa-bullhorn"></i> Announcements</a>
+    <a class="nav-link" id="leaderboard"routerLink="/courses/{{courseId}}/leaderboard" routerLinkActive="active"><i class="fas fa-trophy"></i> Leaderboard</a>   
+</div>
+-->
+<!----
+<nav  role="navigation" id="mySidenav">
+    <div id="menuToggle">
+
+        <input type="checkbox"/>
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <ul id="menu">
+            <li class="li-top">
+                <a class="nav-link" id="home" [routerLink]="['/courses', courseId]" routerLinkActive="active"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="li-75">
+                <a class="nav-link" id="modules" routerLink="/courses/{{courseId}}/modules" routerLinkActive="active"><i class="fas fa-book-open"></i> Modules</a>
+            </li>
+            <li class="li-15">
+                <a class="nav-link" id="announcements" routerLink="/courses/{{courseId}}/announcements" routerLinkActive="active"><i class="fas fa-bullhorn"></i> Announcements</a>
+            </li>
+            <li class="li-bottom li-60">
+                <a class="nav-link" id="leaderboard"routerLink="/courses/{{courseId}}/leaderboard" routerLinkActive="active"><i class="fas fa-trophy"></i> Leaderboard</a>  
+            </li>
+        </ul>
+
+    </div>
+</nav>
+-->
+
+<!----------------- SideNav ------------------------------------>
+
+<!-- *********** SideNav ************* -->
+<div class="toggle-wrap" (click)="toggleMenu(this)">
+    <!--<span class="toggle-bar"></span>-->
+    <div id="menuToggle">
+        <input type="checkbox"/>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+</div>
+<aside class="active" id="mySidenav">
+    <a class="aside-list" id="home" [routerLink]="['/courses', courseId]" routerLinkActive="active"><i class="fas fa-home  mtpx"></i> Home</a>
+    <a class="aside-list" id="modules" routerLink="/courses/{{courseId}}/modules" routerLinkActive="active"><i class="fas fa-book-open"></i> Modules</a>
+    <a class="aside-list" id="announcements" routerLink="/courses/{{courseId}}/announcements" routerLinkActive="active"><i class="fas fa-bullhorn"></i> Announcements</a>
+    <a class="aside-list" id="leaderboard"routerLink="/courses/{{courseId}}/leaderboard" routerLinkActive="active"><i class="fas fa-trophy"></i> Leaderboard</a>
+    <a class="aside-list" id="people" routerLink="/courses/{{courseId}}/people" routerLinkActive="active"><i class="fas fa-user"></i> Students</a>
+    <a class="aside-list" id="play" routerLink="/courses/{{courseId}}/play" routerLinkActive="active"><i class="fas fa-gamepad"></i> Play!</a>    
+</aside>
+

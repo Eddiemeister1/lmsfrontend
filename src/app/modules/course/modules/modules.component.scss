@@ -1,0 +1,521 @@
+/**** Responsive BreakPoints ********/
+@mixin small {
+@media (max-width: 350px) { @content; }
+}@mixin mobile {
+@media (max-width: 568px) { @content; }
+}@mixin tablet {
+@media (min-width: 768px) { @content; }
+}@mixin tablet-large {
+@media (min-width: 900px) { @content; }
+}@mixin desktop {
+@media (min-width: 1024px) { @content; }
+}@mixin desktop-large {
+@media (min-width: 1200px) { @content; }
+}@mixin desktop-xlarge {
+@media (min-width: 1440px) { @content; }
+}@mixin desktop-xxlarge {
+@media (min-width: 1600px) { @content; }
+}@mixin desktop-xxxlarge {
+@media (min-width: 1800px) { @content; }
+} 
+
+/**** End Responsive BreakPoints ********/
+
+/**** App Colors ****/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+
+
+$base-color: #d9deff;
+//This is for fitting the checkmark image in the flexbox item
+
+.flexbox-row {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexbox-container{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /*height: 50px;*/
+    width: 600px;
+    padding: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(236, 236, 236);
+    border: 1px solid black;
+    //border-left: solid black 1px;
+    //border-right: solid black 1px;
+    border-bottom: dotted gray 1px;
+}
+
+.flexbox-options {
+    margin-bottom: 15px;
+    align-self: flex-end;
+}
+
+.flexbox-item {
+    align-self: stretch;
+    background-color: transparent;
+   // border: solid rgb(175, 175, 175) 1px;
+    border: none;
+}
+
+.flexbox-top-container {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /*height: 50px;*/
+    width: 80%;
+    padding: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+    /*background-color: rgb(71, 253, 117);*/
+    @include tablet(){
+        width: 600px;
+    }
+    
+    .flexbox-top-options {
+        margin-bottom: 15px;
+    }
+
+    .flexbox-progress-bar {
+        align-self: stretch;
+        background-color: rgb(219, 219, 219);
+    }
+}
+
+.mat-vertical-content-container {
+    margin-left: 16px;
+    border: 0;
+    position: relative;
+    @include tablet(){
+        margin-left: 36px;
+    }
+}
+
+.flexbox-item-module-actions {
+    margin-top: 15px;
+    align-self: flex-end;
+    background-color: transparent;
+    //border: solid black 1px;
+    border: none;
+}
+
+.flexbox-module-options {
+    float: right;
+}
+
+.flexbox-links{
+    align-self: stretch;
+
+    .flexbox-links-inner {
+        align-self: stretch;
+        border: solid black 1px;
+
+        &:hover {
+            background-color: $base-color;
+        }
+    }
+}
+
+.flexbox-resources {
+    align-self: stretch;
+
+    .flexbox-resources-inner {
+        align-self: stretch;
+        border: solid black 1px;
+
+        &:hover {
+            background-color: $base-color;
+        }
+    }
+}
+
+.flexbox-quizzes {
+    align-self: stretch;
+   // border: solid black 1px;
+   border: none;
+}
+
+.flexbox-quizzes:hover {
+    background-color: $base-color;
+}
+
+/************* More Style *************************/ 
+.complete-check{
+    float: right;
+    color: green;
+    position: relative;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+} 
+
+.btn {
+    font-size: 12px;
+    @include tablet(){
+        font-size: .85rem;
+    }
+}
+
+
+.btn-modules-inner {
+    color: #000;
+    background-color: transparent;
+    border-color: transparent;
+    margin-left: 10px;
+}
+
+.icon-style {
+    color: $colorB;
+    position: relative;
+    float: left;
+    top: 10px;
+    left: 10px;
+    width: 15px;
+}
+
+.btn-modules-inner:focus {
+    box-shadow: none!important;
+}
+.btn-modules-inner:not(:disabled):not(.disabled):active {
+    color: #007bff;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+i.fas.fa-caret-right {
+    margin-right: 10px;
+}
+
+i.fas.fa-caret-down {
+    margin-right: 10px;
+}
+
+/********* btn-extra global ****************/
+.btn-extra {
+    width: 130px;
+    padding: 1px 4px;
+    margin: 3px 0;
+    font-size: 1rem;
+    background-color: #081e3f;
+    color: white;
+    border: 1px solid #081e3f;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-weight: 500;
+}
+
+.btn-extra:hover {
+    background-color: #081e3f;
+    color: #c3993f;
+    border: 1px solid #081e3f;
+}
+
+.btn-extra:not(:disabled):not(.disabled):active {
+    background-color: #081e3f;
+    color: #c3993f;
+    border: 1px solid #081e3f;
+}
+
+.btn-extra.focus, .btn-extra:focus {
+    box-shadow: none;
+}
+
+.close:focus, .close:hover {
+    color: #000;
+    text-decoration: none;
+    opacity: .75;
+    outline: none;
+}
+
+/******************************************************************************/ 
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #007bff;
+    color: white;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-state-done {
+    background-color: green;
+    color: white;
+}
+
+.flexbox-links.flexbox-links-inner:hover {
+    background-color: #e9ecef;
+}
+
+.flexbox-subcontainer {
+    margin-top: 15px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 3%;
+    padding: 20px 10px;
+    @include tablet(){
+        width: 560px;
+    }
+}
+
+.mat-stepper-vertical, .mat-stepper-horizontal {
+    display: block;
+    width: 100%;
+    @include tablet(){
+        width: 600px;
+    }
+}
+
+.flexbox-resources .flexbox-resources-inner {
+    align-self: stretch;
+    border: none;
+}
+.flexbox-links .flexbox-links-inner {
+    align-self: stretch;
+    //border: solid black 1px;
+    border: none;
+}
+
+.flexbox-resources .flexbox-resources-inner:hover {
+    background-color: #e0e0e0;
+}
+.flexbox-links .flexbox-links-inner:hover {
+    background-color: #e0e0e0;
+}
+
+/***** Btn view discussion ******/
+.view-discussion {
+    font-size: 13px;
+    margin-top: -12px;
+    margin-left: 0;
+    color: black;
+    background-color: #e0e0e0;
+    border-color: #e0e0e0;
+    @include tablet(){
+        margin-left: 420px;
+    }
+}
+.view-discussion:hover {
+    color: #fff;
+    background-color: #777777;
+    border-color: #777777;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.2rem rgba(175, 175, 175, 0.5);
+}
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: #fff;
+    background-color: #777777;
+    border-color: #777777;
+}
+/***** End Btn view discussion ******/
+::ng-deep ngb-progressbar .progress {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    border: 1px solid #d8d8d8!important;
+
+    .ng-star-inserted {
+        color:black!important;
+        margin-left: 10px;
+    }
+    .bg-primary {
+        background-color: #28a745 !important;
+    }
+
+}
+
+.btn-no-color {
+    color: #000;
+    background-color: transparent;
+    border-color: transparent;
+    border: 1px solid #e0e0e0;
+    padding: 2px 7px;
+    margin: 3px 4px 0;
+}
+
+.btn-no-color:hover {
+    color: black;
+    background-color: #e0e0e0;
+    border-color: #e0e0e0;
+}
+.no-border-backbround{
+    background-color: transparent!important;
+    border-color: transparent!important;
+}
+.btn-no-color:focus {
+    box-shadow: none;
+}
+.btn-no-color:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+
+.availability-date {
+    background-color: #081e3f;;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: white;
+    margin-left: 5px;
+    padding: 1px 10px;
+    font-size: .8rem;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: $colorB;
+    color: white;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-state-done {
+    background-color: green;
+    color: white;
+}
+
+::ng-deep .mat-vertical-stepper-header {
+    display: flex;
+    align-items: center;
+    padding: 24px 10px!important;
+    height: 24px;
+}
+::ng-deep .mat-vertical-content-container {
+    margin-left: 20px!important;
+    border: 0;
+    position: relative;
+}
+
+::ng-deep .mat-vertical-content {
+    padding: 0 0 24px 10px!important;
+}
+
+.flexbox-links.flexbox-links-inner:hover {
+    background-color: #e9ecef;
+}
+
+.flexbox-resources .flexbox-resources-inner {
+    align-self: stretch;
+    border: none;
+}
+.flexbox-links .flexbox-links-inner {
+    align-self: stretch;
+    //border: solid black 1px;
+    border: none;
+}
+
+.flexbox-resources .flexbox-resources-inner:hover {
+    background-color: #e0e0e0;
+}
+.flexbox-links .flexbox-links-inner:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.2rem rgba(175, 175, 175, 0.5);
+}
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: #fff;
+    background-color: #777777;
+    border-color: #777777;
+}
+/***** End Btn view discussion ******/
+::ng-deep ngb-progressbar .progress {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    border: 1px solid #d8d8d8!important;
+
+    .ng-star-inserted {
+        color:black!important;
+        margin-left: 10px;
+    }
+    .bg-primary {
+        background-color: #28a745 !important;
+    }
+    .bg-info {
+        background-color: #c3993f!important;
+    }
+    
+}
+
+.custom-spinner {
+    position: relative;
+    float: right;
+    right: 5%;
+    top: 10px;
+}
+
+.quiz-score {
+    position: relative;
+    float: right;
+    right: 5px;
+    top: 10px;
+    width: 30%;
+}
+
+// ::ng-deep .progress-bar {
+//     background-color: red !important;
+// }
+
+.not-in-mobile{
+    display: none;
+    @include tablet(){
+        display: inline-block;
+    }
+}
+
+.alert-info {
+    color: $colorB;
+    background-color: #bd973fba;
+    border-color: $colorY;
+    font-size: 12px;
+    word-break: break-word;
+    @include tablet(){
+        font-size: 16px;
+    }
+}
+
+::ng-deep .modal-content {
+    margin-top: 120px;
+    @include tablet(){
+        margin-top: 0;
+    }
+}
+
+::ng-deep .modal-open .modal {
+    z-index: 9999;
+}
+
+
+
+.course-Progress {
+    font-weight: 500;
+    text-transform: uppercase;
+   // border: 1px solid #c3993f;
+    border: 1px solid #081e3f42;
+    padding: 20px;
+    border-radius: 8px;
+   // background-color: #c3993f4d;
+    white-space: pre-wrap;
+    line-height: 35px;
+    text-align: center;
+    box-shadow: 0px 8px 10px 2px #081e3f;
+    display: none;
+}

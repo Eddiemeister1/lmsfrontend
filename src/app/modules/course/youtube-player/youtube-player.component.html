@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{this.ytVideo.moduleTitle}} - Video {{this.ytVideo.videoIndex}}</h4> 
+ 
+  <button type="button" class="close" aria-label="Close" (click)="dismissProgressAndClose()"> 
+       <span aria-hidden="true">&times;</span> 
+ </button> 
+</div>
+<div class="modal-body">
+  <ngb-alert type="warning" [dismissible]="false"><strong>Attention!</strong> In order to save your watching progress, please keep watching the video until a green message appears here!</ngb-alert>
+    <!-- <label>{{this.ytVideo.percentageWatched}}% Watched</label> -->
+    <!-- <br>
+    <label>{{this.progressData.hasOwnProperty("progressStatus") ? this.progressData["progressStatus"] : null}}</label>
+    <br>
+    <label>Take # {{this.progressData.hasOwnProperty("progressStatus") ? this.progressData["take"] : null}}</label> -->
+    <div class="embed-responsive embed-responsive-16by9">    
+        <div #player id="player"></div>
+      <!-- <iframe class="embed-responsive-item" width="780" height="480" [src]="this.ytVideo.link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+    </div>
+</div>
+<div class="modal-footer">
+  <ngb-alert *ngIf="this.progressData['progressStatus'] == 'incomplete'" type="danger" [dismissible]="false">Current Status: <strong>{{this.progressData["progressStatus"]}}</strong> </ngb-alert>
+  <ngb-alert *ngIf="this.progressData['progressStatus'] == 'partial'" type="primary" [dismissible]="false">Current Status: <strong>{{this.progressData["progressStatus"]}}</strong> </ngb-alert>
+  <ngb-alert *ngIf="this.progressData['progressStatus'] == 'complete'" type="success" [dismissible]="false">Current Status: <strong>{{this.progressData["progressStatus"]}}</strong> </ngb-alert>
+  <!-- <div [ngSwitch]="this.progressData['progressStatus']"> -->
+    <!-- <div *ngSwitchCase="incomplete"> <ngb-alert *ngSwitchCase="incomplete" type="danger" [dismissible]="false">Current Status: <strong>{{this.progressData["progressStatus"]}}</strong> </ngb-alert></div> -->
+
+    <!-- <ngb-alert *ngSwitchCase="partial" type="primary" [dismissible]="false">Current Status: <strong>{{this.progressData["progressStatus"]}}</strong> </ngb-alert>
+    <ngb-alert *ngSwitchCase="complete" type="success" [dismissible]="false">Current Status: <strong>{{this.progressData["progressStatus"]}}</strong> </ngb-alert> -->
+  <!-- </div> -->
+  
+    <!-- <button type="button" class="btn btn-light" (click)="activeModal.close('Close click')">Close</button> -->
+    <!-- <button type="submit" class="btn btn-primary" [disabled]="!this.watchedEnough" (click)="passBack()">Done ({{0.60 * this.timeLeft * 1000| date:'mm:ss':'UTC'}})</button> -->
+</div>

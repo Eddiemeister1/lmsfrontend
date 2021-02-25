@@ -1,0 +1,150 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$client-primary: mat-palette($mat-indigo);
+$client-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$client-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$client-theme: mat-light-theme($client-primary, $client-accent, $client-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($client-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+/**** App Colors ****/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+.t-class {
+    color: $colorB;
+    text-transform: uppercase;
+    font-size: 25px;
+}
+
+.lms-bg {
+    background-color: $colorB;
+}
+
+.custom-font {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+}
+
+.clamp-words {
+    max-width: 625.5px; 
+    width: 100%;
+    word-wrap:break-word;
+}
+
+.flexbox-row {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.flexbox-side {
+    position: absolute;
+    z-index: 3;
+    margin-top: 30px;
+    align-self: flex-start;
+}
+
+.center-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.center-table-column {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-table-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.announcement {
+    background-color: rgb(235, 235, 235);
+    width: 300px; 
+    max-width:300px;
+    margin-top:15px;
+}
+
+.trstyle:hover {
+    background-color: rgb(232, 248, 255);
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+#page-container {
+    position: relative;
+    min-height: calc(100vh - 40px);
+    padding-top: 70px;        /* padding for navbar*/   
+}
+  
+#content-wrap {
+    padding-bottom: 1.5rem;   /* Footer height */
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;            /* Footer height */
+}
+
+
+.modal-open .modal {
+    z-index: 999999999999999!important;
+}
+
+.hero-image {
+   // background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./assets/images/fiu_2.jpg");
+    background-image: linear-gradient(rgb(255,255,255,0), rgb(255, 255, 255,.60)), url("./assets/images/campus.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    min-height: 100vh
+  }
+
+  .hero-image-2 {
+    // background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./assets/images/fiu_2.jpg");
+     background-image: linear-gradient(rgb(255,255,255,0), rgb(255, 255, 255,1)), url("./assets/images/fiu_2.jpg");
+     background-position: top;
+     background-repeat: no-repeat;
+     background-size: cover;
+     position: relative;
+     min-height: 100vh
+   }

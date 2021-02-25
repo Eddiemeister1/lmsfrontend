@@ -1,0 +1,61 @@
+/****========== Custom Styles ===========*****/
+
+/**** Responsive BreakPoints ********/
+@mixin mobile {
+@media (max-width: 568px) { @content; }
+}@mixin tablet {
+@media (min-width: 768px) { @content; }
+}@mixin tablet-large {
+@media (min-width: 900px) { @content; }
+}@mixin desktop {
+@media (min-width: 1024px) { @content; }
+}@mixin desktop-large {
+@media (min-width: 1200px) { @content; }
+}@mixin desktop-xlarge {
+@media (min-width: 1440px) { @content; }
+}@mixin desktop-xxlarge {
+@media (min-width: 1600px) { @content; }
+}@mixin desktop-xxxlarge {
+@media (min-width: 1800px) { @content; }
+} 
+
+/**** App Colors ****/
+$colorY:#c3993f;
+$colorB:#081e3f;
+
+
+/****========== End Custom Styles ===========*****/
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .btn-extra {
+        width: 100%;
+        padding: 1px 4px;
+        margin: 3px;
+        font-size: 12px;
+        background-color: $colorB;
+        color: white;
+        border: 1px solid $colorB;
+        @include tablet(){
+            width: 110px;
+            margin: 3px;
+        }
+        
+    }
+    .btn-extra:hover {
+        background-color: $colorB;
+        color: $colorY;
+        border: 1px solid $colorB;
+    }
+    
+    .btn-extra:not(:disabled):not(.disabled):active {
+        background-color: $colorB;
+        color: $colorY;
+        border: 1px solid $colorB;
+    }
+    
+    .btn-extra.focus, .btn-extra:focus {
+        box-shadow: none;
+    }

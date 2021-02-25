@@ -1,0 +1,5 @@
+export const environment = {
+  production: true,
+  apiURL: 'https://fide-lms-backend.herokuapp.com',
+  frontendURL: 'https://frontend-fide-lms.herokuapp.com'
+};

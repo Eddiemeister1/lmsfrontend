@@ -1,0 +1,78 @@
+<div class="center-table-row">
+    <app-sidebar></app-sidebar>
+</div>
+    <div class="container">
+        <div class="title">           
+              <h2  class="t-class mt-4 mb-4">Click on the game to play!</h2>
+              <h3 *ngIf="gameOver" class="t-class mt-4 mb-4">GAME OVER!</h3>
+             
+        </div>
+        <div class="replay-B">
+            <button *ngIf="gameOver" (click)="restartGame();" mat-raised-button="mat-raised-button">Replay</button>
+        </div>
+      <mat-grid-list   cols="1" rowHeight="400px">
+          <mat-grid-tile>
+              <div class="game start-game" (click)="jump();">
+                  <div id="character">
+                      <div id="sprite"></div>
+                  </div>
+                  <div id="block"></div>
+              </div>
+          </mat-grid-tile>
+      </mat-grid-list>
+      <div id="floorwrapper" class="  floorwrapper"><div class="" id="floor"></div></div>
+  
+      <div class = "row  buttons justify-content-around">
+          <div class =" col col-12 col-sm-12 col-md-6 col-lg-3 row justify-content-center">
+              <button class="btn btn-lg btn-outline-primary">Score:<span id="scoreSpan"></span>
+              </button>
+          </div>
+          <div class ="col col-12 col-sm-12 col-md-6 col-lg-3 row justify-content-center">
+              <button class="btn btn-lg btn-outline-primary" color="primary">Your High Score:<span id="youHighScore"></span>
+              </button>
+          </div>
+          <div class ="col col-12 col-sm-12 col-md-6 col-lg-3 row justify-content-center">
+              <button class="btn btn-lg btn-outline-primary" color="warn">Course's High Score:<span id="CourseHighScore"></span>
+              </button>
+          </div>
+          <div class="col col-12 col-sm-12 col-md-6 col-lg-3 row justify-content-center">
+              <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Leaderboard</button>
+          </div>
+      </div>
+  
+      
+  
+  
+  </div>
+  <!-- MODAL -->
+  <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Leaderboard</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let users of leaderboard" class="" >
+                      <td scope="row">{{users.counter}}</td>
+                      <td>{{users.f_name}}</td>
+                      <td>{{users.student_score}}</td>
+                  </tr>
+              </tbody>
+       </table>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Exit</button>
+      </div>
+  </ng-template>
+

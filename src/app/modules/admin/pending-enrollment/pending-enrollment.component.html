@@ -1,0 +1,77 @@
+
+<div class="header-enrollment mt-4 mb-4">
+    <h2 *ngIf="course">{{ course.name }}</h2>
+    <h5 *ngIf="course">Seats: {{ course.seats }}</h5>
+</div>
+
+
+<table class="table no-tablet" *ngIf="!noSeats; else elseBlock">
+    <thead>
+        <tr class="table-header">
+            <th scope="col">studentID</th>
+            <th scope="col">email</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Enroll</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let student of students">
+            <ng-container *ngIf="student.enrollment_status == 'pending'">
+                <th scope="row">{{ student.student_id}}</th>
+                <td>{{ student.email }}</td>
+                <td>{{ student.f_name }}</td>
+                <td>{{ student.l_name }}</td>
+                <td>
+                    <button type="button" (click)="acceptEnrollment(student.student_id, student.course_id, 'enrolled')"
+                        class="btn btn-success btn-extra">Accept</button>
+                    <button type="button" (click)="declineEnrollment(student.student_id, student.course_id)"
+                        class="btn btn-danger btn-extra">Decline</button>
+                </td>
+            </ng-container>
+        </tr>
+    </tbody>
+</table>
+
+<!---------------------------------- Tablet Mobile ----------------------------------------------------------------->
+<div class="mobile-style tablet-mobile" *ngIf="!noSeats; else elseBlockmobile">
+    <div *ngFor="let student of students" class="ngfor-table">
+        <div *ngIf="student.enrollment_status == 'pending'">
+            <div class="tablet-mobile-header">
+                <p class="center-text mb-0" >{{ student.f_name }} {{ student.l_name }}</p>
+            </div>
+            <div class="tb-border ">
+                <p class="name-style mb-0">ID <span class="float-right">{{ student.student_id}}</span></p>
+            </div>
+            <div class="tb-border ">
+                <p class="name-style align-baseline mb-0">Email <span class="float-right">{{ student.email }}</span></p>
+            </div>
+            <div class="display-btn" >
+                <div class="btn-actions-style">
+                    <button type="button" (click)="acceptEnrollment(student.student_id, student.course_id, 'enrolled')"
+                        class="btn btn-success btn-extra">Accept</button>
+                    <button type="button" (click)="declineEnrollment(student.student_id, student.course_id)"
+                        class="btn btn-danger btn-extra">Decline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------------------------------------------------------------------>
+
+<ng-template #elseBlock>
+    <h4 class="center-form seat-desktop">No seats available!</h4>
+</ng-template>
+
+<ng-template #elseBlockmobile>
+    <h4 class="center-form seat-mobile" >No seats available!</h4>
+</ng-template>
+
+
+
+<div class="go-back-btn mt-5 mb-5">
+    <a routerLink="/admin/dashboard" class="btn btn-warning btn-extra w90p"><i class="fas fa-arrow-circle-left"></i> Go Back</a>
+</div>
+
+<!---------------------- Mobile - Tablet --------------------------------------------------------------------------------------------------->
+

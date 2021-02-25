@@ -1,0 +1,25 @@
+
+.btn-extra {
+    width: 150px;
+    padding: 2px 10px;
+    margin: 3px 0;
+    font-size: 1rem;
+    background-color: #081e3f;
+    color: white;
+    border: 1px solid #081e3f;
+}
+.btn-extra:hover {
+    background-color: #081e3f;
+    color: #c3993f;
+    border: 1px solid #081e3f;
+}
+
+.btn-extra:not(:disabled):not(.disabled):active {
+    background-color: #081e3f;
+    color: #c3993f;
+    border: 1px solid #081e3f;
+}
+
+.btn-extra.focus, .btn-extra:focus {
+    box-shadow: none;
+}
