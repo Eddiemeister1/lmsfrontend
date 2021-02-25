@@ -60,7 +60,7 @@ Thumbs.db
 
 
 #Front-end files for untracked changes
-src/environments/environment.prod.ts
+#src/environments/environment.prod.ts
 src/app/app.component.ts
 
 
